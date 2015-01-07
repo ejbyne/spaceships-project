@@ -1,0 +1,34 @@
+{
+  "name": "space-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.10.7",
+    "grunt-cli": "^0.1.13",
+    "jasmine-node": "^1.14.5",
+    "socket.io": "^1.2.1"
+  },
+  "devDependencies": {
+    "casper-chai": "^0.2.1",
+    "casperjs": "^1.1.0-beta3",
+    "chai": "^1.10.0",
+    "grunt-jasmine": "^0.1.0",
+    "grunt-mocha-casperjs": "^1.4.1",
+    "mocha": "^2.1.0",
+    "mocha-casperjs": "^0.5.3",
+    "phantomjs": "^1.9.13"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Callisto13/Space.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Callisto13/Space/issues"
+  },
+  "homepage": "https://github.com/Callisto13/Space"
+}
