@@ -1,23 +1,13 @@
-// function Ship() {
-//   var x;
-//   var y;
-//   this.width = 24;
-//   this.height = 24;
-//   this.speed = 256;
-//   this.missiles = 3;
-//   this.id;
-// };
-
-
 var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d"),
     width = document.body.clientWidth;
     height = document.body.clientHeight;
-    //height = 100%,
     keys = [];
 
 canvas.width = width;
 canvas.height = height;
+
+document.body.style.overflow = 'hidden';
 
 document.body.addEventListener("keydown", function(e) {
     keys[e.keyCode] = true;
@@ -34,7 +24,7 @@ var Ship = function (x, y, radius, color) {
     this.radius = radius || 10;
     
     this.isThrusting = false;
-    this.thrust = 0.1;
+    this.thrust = 0.2;
     this.turnSpeed = 0.001;
     this.angle = 0;
     
@@ -106,13 +96,45 @@ Ship.prototype.render = function () {
     ctx.stroke();
 };
 
+var Missile = function (ship){
+	this.x = ship.x;
+  this.y = ship.y;
+  this.isFired = false;
+  this.shotSpeed = 0.2;
+  this.color = '#fff';
+  this.angle = 0;
+  this.size = 5;
+  this.targetx = 0;
+  this.targety = 0;
+};
+
+Missile.prototype.shoot = function(){
+	this.render();	
+};
+
+Missile.prototype.update = function(){
+	if(this.isFired){
+		missile.render();
+	};
+};
+
+Missile.prototype.render = function(){
+	ctx.strokeStyle = this.color;
+	ctx.beginPath();
+	ctx.moveTo(this.x, this.y);
+	ctx.lineTo(  );
+	ctx.closePath();
+  ctx.stroke();
+};
+
 var ship = new Ship(width/2, height/2, 20);
+var missile = new Missile(ship);
 
 function render() {
     
     // check keys
-    // up arrow or space
-    ship.isThrusting = (keys[38] || keys[32]);
+    // up arrow
+    ship.isThrusting = (keys[38]);
 
     if (keys[39]) {
         // right arrow
@@ -122,12 +144,17 @@ function render() {
         // left arrow
        ship.turn(-1);
     }
-   
+    
+    //space
+    missile.isFired = (keys[32]);
     
     ctx.clearRect(0, 0, width, height);
     ship.update();
     ship.render();
     requestAnimationFrame(render);
+
+    missile.update();
+
 }
 
 render();
