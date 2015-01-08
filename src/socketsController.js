@@ -35,7 +35,12 @@ var socket = function(io) {
       remoteMissiles[socket.id].x = missileData.x;
       remoteMissiles[socket.id].y = missileData.y;
       socket.broadcast.emit('show missile', {id: remoteMissiles[socket.id].id, x: remoteMissiles[socket.id].x, y: remoteMissiles[socket.id].y})
-    })
+    });
+
+    // socket.on('ship hit', function(winnerData) {
+    //   socket.broadcast.emit('delete missile', {id: socket.id});
+    //   // delete remoteMissiles[socket.id];
+    // });    
   });
 };
 

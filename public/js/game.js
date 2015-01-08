@@ -46,6 +46,10 @@ socket.on('delete ship', function(shipData) {
   delete otherShips[shipData.id];
 });
 
+socket.on('delete missile', function(missileData) {
+  delete remoteMissiles[missileData.id];
+});
+
 socket.on('move ship', function(shipData) {
   otherShips[shipData.id].x = shipData.x;
   otherShips[shipData.id].y = shipData.y;
@@ -87,14 +91,34 @@ function render() {
 
   missile.update();
   socket.emit('missile location', {x: missile.x, y: missile.y});
+
   if (Object.keys(otherMissiles).length != 0) {
     for (var key in otherMissiles) {
       otherMissiles[key].render();
+
+      if (collision(ship, otherMissiles[key])) {
+        // socket.emit('ship hit', {winner: key});
+        // socket.emit('disconnect');
+      }
     }
   }
 
   requestAnimationFrame(render);
 }
+
+function collision(entity1, entity2) {
+
+    var distanceX = Math.abs(entity1.x - entity2.x);
+    var distanceY = Math.abs(entity1.y - entity2.y);
+
+    if (distanceX > entity1.radius + entity2.radius && distanceY > entity1.radius + entity2.radius) {
+        return false;
+    }
+
+    if (distanceX <= entity1.radius + entity2.radius && distanceY <= entity1.radius + entity2.radius) {
+        return true;
+    }
+};
 
 render();
 
