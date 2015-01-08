@@ -26,23 +26,15 @@ var missile = new Missile('#f00');
 var otherShips = {};
 var otherMissiles = {};
 var alive = true;
-var missileVisible = true;
 var playerId = false;
 
 socket.emit('start', {x: ship.x, y: ship.y});
 
-socket.on('socket id', function(id) {
-  playerId = id;
+socket.on('socket id', function(socketId) {
+  playerId = socketId.id;
 })
 
-socket.on('new ship', function(shipData) {
-  otherShips[shipData.id] = new Ship();
-  otherShips[shipData.id].x = shipData.x;
-  otherShips[shipData.id].y = shipData.y;
-  otherMissiles[shipData.id] = new Missile();
-});
-
-socket.on('existing ship', function(shipData) {
+socket.on('add ship', function(shipData) {
   otherShips[shipData.id] = new Ship();
   otherShips[shipData.id].x = shipData.x;
   otherShips[shipData.id].y = shipData.y;
@@ -53,7 +45,7 @@ socket.on('delete ship', function(shipData) {
   if (otherShips[shipData.id]) {
     delete otherShips[shipData.id];
   }
-  if (shipData.id === playerId) {
+  if (shipData.id == playerId) {
     alive = false;
   }
 });
@@ -61,9 +53,6 @@ socket.on('delete ship', function(shipData) {
 socket.on('delete missile', function(missileData) {
   if (otherMissiles[missileData.id]) {
     delete otherMissiles[missileData.id];
-  }
-  if (missileData.id === playerId) {
-    missileVisible = false;
   }
 });
 
@@ -99,11 +88,13 @@ function render() {
   }
 
   ctx.clearRect(0, 0, width, height);
+
   if (alive) {
     ship.update();
     socket.emit('move ship', {x: ship.x, y: ship.y});
     ship.render();
   }
+
   if (Object.keys(otherShips).length != 0) {
     for (var key in otherShips) {
       otherShips[key].update();
@@ -116,10 +107,8 @@ function render() {
     }
   }
 
-  if (missileVisible) {
-    missile.update();
-    socket.emit('missile location', {x: missile.x, y: missile.y});
-  }
+  missile.update();
+  socket.emit('missile location', {x: missile.x, y: missile.y});
 
   if (Object.keys(otherMissiles).length != 0) {
     for (var key in otherMissiles) {
@@ -136,14 +125,12 @@ function render() {
 }
 
 function collision(entity1, entity2) {
-
     var distanceX = Math.abs(entity1.x - entity2.x);
     var distanceY = Math.abs(entity1.y - entity2.y);
 
     if (distanceX > entity1.radius + entity2.radius && distanceY > entity1.radius + entity2.radius) {
         return false;
     }
-
     if (distanceX <= entity1.radius + entity2.radius && distanceY <= entity1.radius + entity2.radius) {
         return true;
     }

@@ -6,8 +6,8 @@ var socket = function(io) {
 
     console.log(socket.id + ' connected');
     for (var keys in remoteShips) {
-      io.to(socket.id).emit("existing ship", {id: remoteShips[keys].id, x: remoteShips[keys].x, y: remoteShips[keys].y});
-      io.to(socket.id).emit("socket id", {id: socket.id})
+      io.to(socket.id).emit("add ship", {id: remoteShips[keys].id, x: remoteShips[keys].x, y: remoteShips[keys].y});
+      io.to(socket.id).emit("socket id", {id: socket.id});
     };
     remoteShips[socket.id] = {id: socket.id};
     remoteMissiles[socket.id] = {id: socket.id};
@@ -22,7 +22,7 @@ var socket = function(io) {
       console.log('Player created');
       remoteShips[socket.id].x = shipData.x;
       remoteShips[socket.id].y = shipData.y;
-      socket.broadcast.emit("new ship", {id: socket.id, x: shipData.x, y: shipData.y});
+      socket.broadcast.emit("add ship", {id: socket.id, x: shipData.x, y: shipData.y});
     });
 
     socket.on('move ship', function(shipData) {
@@ -44,8 +44,8 @@ var socket = function(io) {
     socket.on('missile hit ship', function(winnerData) {
       delete remoteShips[socket.id];
       delete remoteMissiles[socket.id];
-      io.emit('delete missile', {id: socket.id});
       io.emit("delete ship", {id: socket.id});
+      io.emit('delete missile', {id: socket.id});
     });
 
     socket.on('ship hit ship', function(shipData) {
