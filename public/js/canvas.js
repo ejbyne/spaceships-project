@@ -21,7 +21,7 @@ document.body.addEventListener("keyup", function(e) {
     keys[e.keyCode] = false;
 });
 
-var ship = new Ship(width/2, height/2);
+var ship = new Ship('#f00');
 var missile = new Missile();
 var otherShips = {}; 
 

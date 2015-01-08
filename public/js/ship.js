@@ -1,6 +1,6 @@
 // $(document).ready(function() {
 
-var Ship = function (x, y, color, pointerColor) {
+var Ship = function (pointerColor, color) {
   this.x = 32 + (Math.random() * (canvas.width - 64));
   this.y = 32 + (Math.random() * (canvas.height - 64));
   this.radius = 20;
@@ -12,9 +12,9 @@ var Ship = function (x, y, color, pointerColor) {
   this.radians = 0;
   
   this.color = color || "#fff";
-  this.pointerColor = color || "#f00";
+  this.pointerColor = pointerColor || "#000";
   
-  this.pointLength = 20;
+  this.pointLength = 19;
   this.px = 0;
   this.py = 0;
 
