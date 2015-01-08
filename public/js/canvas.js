@@ -22,7 +22,7 @@ document.body.addEventListener("keyup", function(e) {
 });
 
 var ship = new Ship('#f00');
-var missile = new Missile();
+var missile = new Missile('#f00');
 var otherShips = {}; 
 
 socket.emit('start', {x: ship.x, y: ship.y, px: ship.px, py: ship.py});

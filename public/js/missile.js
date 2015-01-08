@@ -1,6 +1,7 @@
 // $(document).ready(function() {
 
-var Missile = function (){
+var Missile = function (color){
+  this.color = color || '#fff';
   this.x = 0;
   this.y = 0;
   this.targetX = 0;
@@ -11,8 +12,7 @@ var Missile = function (){
   this.cos = 0;
   this.radius = 3;
   this.isFired = false;
-  this.shotSpeed = 10;
-  this.color = '#fff';
+  this.shotSpeed = 60;
   this.velX = 0;
   this.velY = 0;
   this.angle = 0;
