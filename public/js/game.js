@@ -2,11 +2,11 @@
 
 var socket = io.connect('/');
 
-var canvas = document.getElementById("canvas"),
-  ctx = canvas.getContext("2d"),
-  width = document.body.clientWidth;
-  height = document.body.clientHeight;
-  keys = [];
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+width = document.body.clientWidth;
+height = document.body.clientHeight;
+var keys = [];
 
 canvas.width = width;
 canvas.height = height;
@@ -21,8 +21,24 @@ document.body.addEventListener("keyup", function(e) {
     keys[e.keyCode] = false;
 });
 
-var ship = new Ship('#f00');
-var missile = new Missile('#f00');
+var colours = [
+  "#f6546a",
+  "#1e90ff",
+  "#f2d007",
+  "#0000ff",
+  "#00c7cc",
+  "#4584d3",
+  "#dd40a7",
+  "#804a2d",
+  "#48b427",
+  "#7ab5ec",
+  "#ff004c",
+  "#8974bd",
+  "#ff40a7",
+  "#488627"];
+var randomColour = colours[Math.floor(Math.random() * colours.length - 1)];
+var ship = new Ship(randomColour);
+var missile = new Missile();
 var otherShips = {};
 var otherMissiles = {};
 var alive = true;
@@ -94,7 +110,7 @@ function render() {
   }
   //space
   if (keys[32]) {
-    missile.setAttributes(ship.px, ship.py, ship.x, ship.y);
+    missile.setAttributes(ship.missileLaunchX, ship.missileLaunchY, ship.x, ship.y);
     missile.isFired = true;
   }
 
@@ -131,7 +147,7 @@ function render() {
       }
     }
   }
-
+  
   requestAnimationFrame(render);
 }
 

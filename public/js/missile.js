@@ -1,7 +1,7 @@
 // $(document).ready(function() {
 
-var Missile = function (color){
-  this.color = color || '#fff';
+var Missile = function (colour){
+  this.missileColour = colour || '#ff0000';
   this.x = -10;
   this.y = -10;
   this.targetX = 0;
@@ -12,9 +12,9 @@ var Missile = function (color){
   this.cos = 0;
   this.radius = 3;
   this.isFired = false;
-  this.shotSpeed = 40;
-  this.velX = 0;
-  this.velY = 0;
+  this.shotSpeed = 30;
+  this.velocityX = 0;
+  this.velocityY = 0;
   this.angle = 0;
 };
 
@@ -41,8 +41,8 @@ Missile.prototype.applyTrajectory = function(){
 };
 
 Missile.prototype.applyFriction = function(){
-  this.velX *= 0.98;
-  this.velY *= 0.98;
+  this.velocityX *= 0.98;
+  this.velocityY *= 0.98;
 };
 
 Missile.prototype.applyVelocity = function(){
@@ -54,9 +54,8 @@ Missile.prototype.applyVelocity = function(){
 
 };
 
-//client
 Missile.prototype.render = function(){
-  ctx.fillStyle = this.color;
+  ctx.fillStyle = this.missileColour;
   ctx.beginPath();
   ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
   ctx.closePath();
