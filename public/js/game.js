@@ -26,8 +26,14 @@ var missile = new Missile('#f00');
 var otherShips = {};
 var otherMissiles = {};
 var alive = true;
+var missileVisible = true;
+var playerId = false;
 
 socket.emit('start', {x: ship.x, y: ship.y});
+
+socket.on('socket id', function(id) {
+  playerId = id;
+})
 
 socket.on('new ship', function(shipData) {
   otherShips[shipData.id] = new Ship();
@@ -43,17 +49,29 @@ socket.on('existing ship', function(shipData) {
   otherMissiles[shipData.id] = new Missile();
 });
 
-socket.on('delete enemy ship', function(shipData) {
-  delete otherShips[shipData.id];
+socket.on('delete ship', function(shipData) {
+  if (otherShips[shipData.id]) {
+    delete otherShips[shipData.id];
+  }
+  if (shipData.id === playerId) {
+    alive = false;
+  }
 });
 
 socket.on('delete missile', function(missileData) {
-  delete remoteMissiles[missileData.id];
+  if (otherMissiles[missileData.id]) {
+    delete otherMissiles[missileData.id];
+  }
+  if (missileData.id === playerId) {
+    missileVisible = false;
+  }
 });
 
 socket.on('move ship', function(shipData) {
-  otherShips[shipData.id].x = shipData.x;
-  otherShips[shipData.id].y = shipData.y;
+  if (otherShips[shipData.id]) {
+    otherShips[shipData.id].x = shipData.x;
+    otherShips[shipData.id].y = shipData.y;
+  }
 });
 
 socket.on('show missile', function(missileData) {
@@ -90,18 +108,25 @@ function render() {
     for (var key in otherShips) {
       otherShips[key].update();
       otherShips[key].render();
+
+      if (collision(ship, otherShips[key])) {
+        socket.emit('ship hit ship', {otherShip: key});
+        alive = false;
+      }
     }
   }
 
-  missile.update();
-  socket.emit('missile location', {x: missile.x, y: missile.y});
+  if (missileVisible) {
+    missile.update();
+    socket.emit('missile location', {x: missile.x, y: missile.y});
+  }
 
   if (Object.keys(otherMissiles).length != 0) {
     for (var key in otherMissiles) {
       otherMissiles[key].render();
 
       if (collision(ship, otherMissiles[key])) {
-        socket.emit('ship hit', {winner: key});
+        socket.emit('missile hit ship', {winner: key});
         alive = false;
       }
     }
