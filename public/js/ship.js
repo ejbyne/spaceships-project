@@ -1,4 +1,7 @@
-var Ship = function (x, y, radius, color) {
+var Ship = function (x, y, radius, color, canvas, ctx, socket) {
+  // this.canvas = canvas;
+  // this.ctx = ctx;
+  // this.socket = socket;
   this.x = x || 0;
   this.y = y || 0;
   this.radius = radius || 10;
@@ -34,15 +37,15 @@ Ship.prototype.update = function () {
   
   // bounds check    
   if(this.x < this.radius){
-      this.x = canvas.width;   
+      this.x = this.canvas.width;   
   }
   if(this.x > canvas.width){
       this.x = this.radius;   
   }
   if(this.y < this.radius){
-      this.y = canvas.height;   
+      this.y = this.canvas.height;   
   }
-  if(this.y > canvas.height){
+  if(this.y > this.canvas.height){
       this.y = this.radius;   
   }
   

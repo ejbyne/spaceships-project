@@ -1,4 +1,7 @@
-var Missile = function (){
+var Missile = function (canvas, ctx, socket){
+  // this.canvas = canvas;
+  // this.socket = socket;
+  this.ctx = ctx;
   this.x = 0;
   this.y = 0;
   this.radius = 3;
