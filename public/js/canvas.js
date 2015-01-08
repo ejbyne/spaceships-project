@@ -25,14 +25,16 @@ var ship = new Ship(width/2, height/2);
 var missile = new Missile();
 var otherShips = {}; 
 
-socket.emit('start', {x: ship.x, y: ship.y});
+socket.emit('start', {x: ship.x, y: ship.y, px: ship.px, py: ship.py});
 
 socket.on('new ship', function(shipData) {
   otherShips[shipData.id] = new Ship();
   // otherShips[shipData.id].id = shipData.id;
   otherShips[shipData.id].x = shipData.x;
   otherShips[shipData.id].y = shipData.y;
-  otherShips[shipData.id].pointerColor = '#000';
+  otherShips[shipData.id].px = shipData.px;
+  otherShips[shipData.id].py = shipData.py;
+  //otherShips[shipData.id].pointerColor = '#000';
 });
 
 socket.on('existing ship', function(shipData) {
@@ -40,6 +42,8 @@ socket.on('existing ship', function(shipData) {
   // otherShips[shipData.id].id = shipData.id;
   otherShips[shipData.id].x = shipData.x;
   otherShips[shipData.id].y = shipData.y;
+  otherShips[shipData.id].px = shipData.px;
+  otherShips[shipData.id].py = shipData.py;
 });
 
 socket.on('delete ship', function(shipData) {
@@ -49,6 +53,8 @@ socket.on('delete ship', function(shipData) {
 socket.on('move ship', function(shipData) {
   otherShips[shipData.id].x = shipData.x;
   otherShips[shipData.id].y = shipData.y;
+  otherShips[shipData.id].px = shipData.px;
+  otherShips[shipData.id].py = shipData.py;
 });
 
 function render() {
@@ -71,6 +77,7 @@ function render() {
 
   ctx.clearRect(0, 0, width, height);
   ship.update();
+  socket.emit('move ship', {x: ship.x, y: ship.y, px: ship.px, py: ship.py});
   ship.render();
   if (Object.keys(otherShips).length != 0) {
     for (var key in otherShips) {

@@ -1,8 +1,8 @@
 // $(document).ready(function() {
 
 var Ship = function (x, y, color, pointerColor) {
-  this.x = x || 0;
-  this.y = y || 0;
+  this.x = 32 + (Math.random() * (canvas.width - 64));
+  this.y = 32 + (Math.random() * (canvas.height - 64));
   this.radius = 20;
   
   this.isThrusting = false;
@@ -33,7 +33,7 @@ Ship.prototype.update = function(){
   this.findPoint();
   this.applyFriction();
   this.applyVelocity();
-  socket.emit('move ship', {x: ship.x, y: ship.y});
+  // socket.emit('move ship', {x: this.x, y: this.y});
 };
 
 Ship.prototype.checkCanvasBounds = function(){
