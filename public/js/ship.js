@@ -108,29 +108,29 @@ var Missile = function (){
   this.shotSpeed = 0.2;
   this.color = '#fff';
   this.angle = 0;
-  this.size = 2;
-  this.targetx = 0;
-  this.targety = 0;
+  this.size = 1;
+  this.ex = 5;
+  this.ey = 5;
 };
 
 // Missile.prototype.shoot = function(){
 // 	this.render();	
 // };
 
-// Missile.prototype.update = function(){
-// 	if(this.isFired){
-// 		missile.render();
-// 	};
-// };
+Missile.prototype.update = function(){
+	if(this.isFired){
+		
+	};
+};
 
-// Missile.prototype.render = function(){
-// 	ctx.strokeStyle = this.color;
-// 	ctx.beginPath();
-// 	ctx.moveTo(this.x, this.y);
-// 	ctx.lineTo();
-// 	ctx.closePath();
-//   ctx.stroke();
-// };
+Missile.prototype.render = function(){
+	ctx.strokeStyle = this.color;
+	ctx.beginPath();
+	ctx.moveTo(this.x, this.y);
+	ctx.lineTo(this.ex, this.ey);
+	ctx.closePath();
+  ctx.stroke();
+};
 
 var ship = new Ship(width/2, height/2, 20);
 var missile = new Missile();
@@ -150,7 +150,7 @@ function render() {
        ship.turn(-1);
     }
 
-    // this needs to be elsewhere - in another function?  renderMissile? - as will not render
+    // this needs to be elsewhere - in another function?  renderMissile? - as will not render ship if here
     // if (keys[32]{
     // 	missile.fire();
     // });
@@ -161,10 +161,10 @@ function render() {
     ctx.clearRect(0, 0, width, height);
     ship.update();
     ship.render();
+    missile.render();
     requestAnimationFrame(render);
 
     //missile.update();
-
 }
 
 render();
