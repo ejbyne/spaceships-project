@@ -1,20 +1,19 @@
 var express = require('express');
 var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var socket = require('./src/socketsController.js')(io);
+
+var port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
-app.get('/', function(req, res) {
-	res.sendFile(__dirname + '/views/index.html');
+
+app.get('/', function(request, response) {
+  response.sendFile(__dirname + '/views/index.html');
 });
 
-io.on('connection', function(socket){
-	console.log('a spaceship entered the universe');
-	socket.on('disconnect', function(){
-		console.log('a spaceship left the universe')
-	});
+server.listen(port, function() {
+  console.log('Server listening on port ' + port);
 });
 
-http.listen(3000, function() {
-	console.log('listening on *:3000');
-});
+module.exports = server;
