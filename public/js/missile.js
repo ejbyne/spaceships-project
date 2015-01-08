@@ -1,3 +1,5 @@
+// $(document).ready(function() {
+
 var Missile = function (){
   this.x = 0;
   this.y = 0;
@@ -60,3 +62,5 @@ Missile.prototype.render = function(){
   ctx.closePath();
   ctx.fill();
 };
+
+// });

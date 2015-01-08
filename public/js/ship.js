@@ -1,7 +1,9 @@
-var Ship = function (x, y, radius, color) {
+// $(document).ready(function() {
+
+var Ship = function (x, y, color, pointerColor) {
   this.x = x || 0;
   this.y = y || 0;
-  this.radius = radius || 10;
+  this.radius = 20;
   
   this.isThrusting = false;
   this.thrust = 0.2;
@@ -10,6 +12,7 @@ var Ship = function (x, y, radius, color) {
   this.radians = 0;
   
   this.color = color || "#fff";
+  this.pointerColor = color || "#f00";
   
   this.pointLength = 20;
   this.px = 0;
@@ -30,6 +33,7 @@ Ship.prototype.update = function(){
   this.findPoint();
   this.applyFriction();
   this.applyVelocity();
+  socket.emit('move ship', {x: ship.x, y: ship.y});
 };
 
 Ship.prototype.checkCanvasBounds = function(){
@@ -77,10 +81,12 @@ Ship.prototype.render = function(){
   ctx.closePath();
   ctx.stroke();
   
-  ctx.strokeStyle = "#f00";
+  ctx.strokeStyle = this.pointerColor;
   ctx.beginPath();
   ctx.moveTo(this.x, this.y);
   ctx.lineTo(this.px, this.py);
   ctx.closePath();
   ctx.stroke();
 };
+
+// });

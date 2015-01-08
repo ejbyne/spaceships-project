@@ -1,3 +1,7 @@
+// $(document).ready(function() {
+
+var socket = io.connect('/');
+
 var canvas = document.getElementById("canvas"),
   ctx = canvas.getContext("2d"),
   width = document.body.clientWidth;
@@ -17,8 +21,35 @@ document.body.addEventListener("keyup", function(e) {
     keys[e.keyCode] = false;
 });
 
-var ship = new Ship(width/2, height/2, 20);
+var ship = new Ship(width/2, height/2);
 var missile = new Missile();
+var otherShips = {}; 
+
+socket.emit('start', {x: ship.x, y: ship.y});
+
+socket.on('new ship', function(shipData) {
+  otherShips[shipData.id] = new Ship();
+  // otherShips[shipData.id].id = shipData.id;
+  otherShips[shipData.id].x = shipData.x;
+  otherShips[shipData.id].y = shipData.y;
+  otherShips[shipData.id].pointerColor = '#000';
+});
+
+socket.on('existing ship', function(shipData) {
+  otherShips[shipData.id] = new Ship();
+  // otherShips[shipData.id].id = shipData.id;
+  otherShips[shipData.id].x = shipData.x;
+  otherShips[shipData.id].y = shipData.y;
+});
+
+socket.on('delete ship', function(shipData) {
+  delete otherShips[shipData.id];
+});
+
+socket.on('move ship', function(shipData) {
+  otherShips[shipData.id].x = shipData.x;
+  otherShips[shipData.id].y = shipData.y;
+});
 
 function render() {
   // up arrow
@@ -37,9 +68,24 @@ function render() {
     missile.setAttributes(ship.px, ship.py, ship.x, ship.y);
     missile.isFired = true;
   }
-  
+
   ctx.clearRect(0, 0, width, height);
   ship.update();
   ship.render();
+  if (Object.keys(otherShips).length != 0) {
+    for (var key in otherShips) {
+      otherShips[key].update();
+      otherShips[key].render();
+    }
+  }
 
   missile.update();
+
+  requestAnimationFrame(render);
+}
+
+render();
+
+
+
+// });

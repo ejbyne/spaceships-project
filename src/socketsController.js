@@ -16,12 +16,14 @@ var socket = function(io) {
     });
 
     socket.on('start', function(shipData) {
+      console.log('Player created');
       remoteShips[socket.id].x = shipData.x;
       remoteShips[socket.id].y = shipData.y;
       socket.broadcast.emit("new ship", {id: socket.id, x: shipData.x, y: shipData.y});
     });
 
     socket.on('move ship', function(shipData) {
+      // console.log(shipData);
       remoteShips[socket.id].x = shipData.x;
       remoteShips[socket.id].y = shipData.y;
       socket.broadcast.emit("move ship", {id: remoteShips[socket.id].id, x: remoteShips[socket.id].x, y: remoteShips[socket.id].y})
