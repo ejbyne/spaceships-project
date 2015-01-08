@@ -25,22 +25,27 @@ var socket = function(io) {
     });
 
     socket.on('move ship', function(shipData) {
-      // console.log(shipData);
-      remoteShips[socket.id].x = shipData.x;
-      remoteShips[socket.id].y = shipData.y;
-      socket.broadcast.emit("move ship", {id: remoteShips[socket.id].id, x: remoteShips[socket.id].x, y: remoteShips[socket.id].y})
+      if (remoteShips[socket.id]) {
+        remoteShips[socket.id].x = shipData.x;
+        remoteShips[socket.id].y = shipData.y;
+        socket.broadcast.emit("move ship", {id: remoteShips[socket.id].id, x: remoteShips[socket.id].x, y: remoteShips[socket.id].y})
+      }
     });
 
     socket.on('missile location', function(missileData) {
-      remoteMissiles[socket.id].x = missileData.x;
-      remoteMissiles[socket.id].y = missileData.y;
-      socket.broadcast.emit('show missile', {id: remoteMissiles[socket.id].id, x: remoteMissiles[socket.id].x, y: remoteMissiles[socket.id].y})
+      if (remoteMissiles[socket.id]) {
+        remoteMissiles[socket.id].x = missileData.x;
+        remoteMissiles[socket.id].y = missileData.y;
+        socket.broadcast.emit('show missile', {id: remoteMissiles[socket.id].id, x: remoteMissiles[socket.id].x, y: remoteMissiles[socket.id].y})
+      }
     });
 
-    // socket.on('ship hit', function(winnerData) {
-    //   socket.broadcast.emit('delete missile', {id: socket.id});
-    //   // delete remoteMissiles[socket.id];
-    // });    
+    socket.on('ship hit', function(winnerData) {
+      delete remoteShips[socket.id];
+      delete remoteMissiles[socket.id];
+      io.emit('delete missile', {id: socket.id});
+      io.emit("delete enemy ship", {id: socket.id});
+    });    
   });
 };
 

@@ -25,6 +25,7 @@ var ship = new Ship('#f00');
 var missile = new Missile('#f00');
 var otherShips = {};
 var otherMissiles = {};
+var alive = true;
 
 socket.emit('start', {x: ship.x, y: ship.y});
 
@@ -42,7 +43,7 @@ socket.on('existing ship', function(shipData) {
   otherMissiles[shipData.id] = new Missile();
 });
 
-socket.on('delete ship', function(shipData) {
+socket.on('delete enemy ship', function(shipData) {
   delete otherShips[shipData.id];
 });
 
@@ -61,6 +62,7 @@ socket.on('show missile', function(missileData) {
 });
 
 function render() {
+
   // up arrow
   ship.isThrusting = (keys[38]);
   
@@ -79,9 +81,11 @@ function render() {
   }
 
   ctx.clearRect(0, 0, width, height);
-  ship.update();
-  socket.emit('move ship', {x: ship.x, y: ship.y});
-  ship.render();
+  if (alive) {
+    ship.update();
+    socket.emit('move ship', {x: ship.x, y: ship.y});
+    ship.render();
+  }
   if (Object.keys(otherShips).length != 0) {
     for (var key in otherShips) {
       otherShips[key].update();
@@ -97,8 +101,8 @@ function render() {
       otherMissiles[key].render();
 
       if (collision(ship, otherMissiles[key])) {
-        // socket.emit('ship hit', {winner: key});
-        // socket.emit('disconnect');
+        socket.emit('ship hit', {winner: key});
+        alive = false;
       }
     }
   }
