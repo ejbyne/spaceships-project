@@ -39,9 +39,9 @@ var Ship = function (x, y, radius, color) {
     this.missiles = [];
 }
 
-Ship.prototype.fireMissile = function(missile){
-    this.missiles << missile; // pass missile object into ship missile array?
-};
+//Ship.prototype.fireMissile = function(missile){
+  //  this.missiles << missile; // pass missile object into ship missile array?
+//};
 
 Ship.prototype.turn = function(dir){
     this.angle += this.turnSpeed * dir;
@@ -84,52 +84,72 @@ Ship.prototype.update = function () {
     // apply velocities    
     this.x -= this.velX;
     this.y -= this.velY;
+
 };
 
 Ship.prototype.render = function () {
-    ctx.strokeStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.stroke();
-    
-    ctx.strokeStyle = "#f00";
-    ctx.beginPath();
-    ctx.moveTo(this.x, this.y);
-    ctx.lineTo(this.px, this.py);
-    ctx.closePath();
-    ctx.stroke();
+  ctx.strokeStyle = this.color;
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.stroke();
+  
+  ctx.strokeStyle = "#f00";
+  ctx.beginPath();
+  ctx.moveTo(this.x, this.y);
+  ctx.lineTo(this.px, this.py);
+  ctx.closePath();
+  ctx.stroke();
 };
+
+
+
+
 
 var Missile = function (){
   this.x = 0;
   this.y = 0;
+  this.radius = 3;
   this.isFired = false;
   this.shotSpeed = 0.2;
   this.color = '#fff';
+  this.velX = 0;
+  this.velY = 0;
   this.angle = 0;
-  this.size = 1;
-  this.ex = 5;
-  this.ey = 5;
 };
 
 // Missile.prototype.shoot = function(){
 // 	this.render();	
 // };
+Missile.prototype.setAttributes = function(x, y, angle){
+    this.x = x;
+    this.y = y;
+    this.angle = angle;
+};
 
 Missile.prototype.update = function(){
 	if(this.isFired){
-		
+    //this.setXAndY();
+    this.render();
+      // ctx.clearRect(0, 0, width, height); // or whatever method does this
+    //};
+
+    var radians = this.angle/Math.PI*180;
+
+    this.velX += Math.cos(radians) * this.shotSpeed;
+    this.velY += Math.sin(radians) * this.shotSpeed;
+
+    this.x -= this.velX;
+    this.y -= this.velY;
 	};
 };
 
 Missile.prototype.render = function(){
-	ctx.strokeStyle = this.color;
-	ctx.beginPath();
-	ctx.moveTo(this.x, this.y);
-	ctx.lineTo(this.ex, this.ey);
-	ctx.closePath();
-  ctx.stroke();
+  ctx.fillStyle = this.color;
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.fill();
 };
 
 var ship = new Ship(width/2, height/2, 20);
@@ -149,22 +169,19 @@ function render() {
         // left arrow
        ship.turn(-1);
     }
-
-    // this needs to be elsewhere - in another function?  renderMissile? - as will not render ship if here
-    // if (keys[32]{
-    // 	missile.fire();
-    // });
     
     //space
-    //missile.isFired = (keys[32]);
+    if (keys[32]) {
+      missile.setAttributes(ship.px, ship.py, ship.angle);
+      missile.isFired = true;
+    }
+   // missile.isFired = (keys[32]);
     
     ctx.clearRect(0, 0, width, height);
     ship.update();
     ship.render();
-    missile.render();
+    missile.update();
     requestAnimationFrame(render);
-
-    //missile.update();
 }
 
 render();
