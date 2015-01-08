@@ -48,10 +48,18 @@ socket.on('move ship', function(shipData) {
   otherShips[shipData.id].y = shipData.y;
 });
 
+function renderOtherShips() {
+  if (Object.keys(otherShips).length != 0) {
+    for (var key in otherShips) {
+      otherShips[key].update();
+      otherShips[key].render();
+    }
+  }
+}
+
 function render() {
   // up arrow
   ship.isThrusting = (keys[38]);
-  
   if (keys[39]) {
     // right arrow
     ship.turn(1);
@@ -65,20 +73,12 @@ function render() {
     missile.setAttributes(ship.px, ship.py, ship.x, ship.y);
     missile.isFired = true;
   }
-
   ctx.clearRect(0, 0, width, height);
   ship.update();
   socket.emit('move ship', {x: ship.x, y: ship.y});
   ship.render();
-  if (Object.keys(otherShips).length != 0) {
-    for (var key in otherShips) {
-      otherShips[key].update();
-      otherShips[key].render();
-    }
-  }
-
+  renderOtherShips();
   missile.update();
-
   requestAnimationFrame(render);
 }
 
