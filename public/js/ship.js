@@ -36,7 +36,12 @@ var Ship = function (x, y, radius, color) {
 
     this.velX = 0;
     this.velY = 0;
+    this.missiles = [];
 }
+
+Ship.prototype.fireMissile = function(missile){
+    this.missiles << missile; // pass missile object into ship missile array?
+};
 
 Ship.prototype.turn = function(dir){
     this.angle += this.turnSpeed * dir;
@@ -96,39 +101,39 @@ Ship.prototype.render = function () {
     ctx.stroke();
 };
 
-var Missile = function (ship){
-	this.x = ship.x;
-  this.y = ship.y;
+var Missile = function (){
+  this.x = 0;
+  this.y = 0;
   this.isFired = false;
   this.shotSpeed = 0.2;
   this.color = '#fff';
   this.angle = 0;
-  this.size = 5;
+  this.size = 2;
   this.targetx = 0;
   this.targety = 0;
 };
 
-Missile.prototype.shoot = function(){
-	this.render();	
-};
+// Missile.prototype.shoot = function(){
+// 	this.render();	
+// };
 
-Missile.prototype.update = function(){
-	if(this.isFired){
-		missile.render();
-	};
-};
+// Missile.prototype.update = function(){
+// 	if(this.isFired){
+// 		missile.render();
+// 	};
+// };
 
-Missile.prototype.render = function(){
-	ctx.strokeStyle = this.color;
-	ctx.beginPath();
-	ctx.moveTo(this.x, this.y);
-	ctx.lineTo(  );
-	ctx.closePath();
-  ctx.stroke();
-};
+// Missile.prototype.render = function(){
+// 	ctx.strokeStyle = this.color;
+// 	ctx.beginPath();
+// 	ctx.moveTo(this.x, this.y);
+// 	ctx.lineTo();
+// 	ctx.closePath();
+//   ctx.stroke();
+// };
 
 var ship = new Ship(width/2, height/2, 20);
-var missile = new Missile(ship);
+var missile = new Missile();
 
 function render() {
     
@@ -144,16 +149,21 @@ function render() {
         // left arrow
        ship.turn(-1);
     }
+
+    // this needs to be elsewhere - in another function?  renderMissile? - as will not render
+    // if (keys[32]{
+    // 	missile.fire();
+    // });
     
     //space
-    missile.isFired = (keys[32]);
+    //missile.isFired = (keys[32]);
     
     ctx.clearRect(0, 0, width, height);
     ship.update();
     ship.render();
     requestAnimationFrame(render);
 
-    missile.update();
+    //missile.update();
 
 }
 
