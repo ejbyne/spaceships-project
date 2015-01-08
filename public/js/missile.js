@@ -2,8 +2,8 @@
 
 var Missile = function (color){
   this.color = color || '#fff';
-  this.x = 0;
-  this.y = 0;
+  this.x = -10;
+  this.y = -10;
   this.targetX = 0;
   this.targetY = 0;
   this.startX = 0;
@@ -12,7 +12,7 @@ var Missile = function (color){
   this.cos = 0;
   this.radius = 3;
   this.isFired = false;
-  this.shotSpeed = 60;
+  this.shotSpeed = 40;
   this.velX = 0;
   this.velY = 0;
   this.angle = 0;
@@ -28,12 +28,12 @@ Missile.prototype.setAttributes = function(targetX, targetY, startX, startY){
 };
 
 Missile.prototype.update = function(){
-if(this.isFired){
+  if(this.isFired){
     this.render();
     this.applyTrajectory();
     this.applyFriction();
     this.applyVelocity();
-};
+  };
 };
 
 Missile.prototype.applyTrajectory = function(){
