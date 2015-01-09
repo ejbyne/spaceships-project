@@ -85,8 +85,10 @@ socket.on('move ship', function(shipData) {
 });
 
 socket.on('show missile', function(missileData) {
-  otherMissiles[missileData.id].x = missileData.x;
-  otherMissiles[missileData.id].y = missileData.y;
+  if (otherMissiles[missileData.id]) {
+    otherMissiles[missileData.id].x = missileData.x;
+    otherMissiles[missileData.id].y = missileData.y;
+  }
 });
 
 function render() {
@@ -125,8 +127,6 @@ function render() {
 
       if (collision(missile, otherShips[key])) {
         score += 1;
-        // socket.emit('ship hit ship', {otherShip: key});
-        delete otherShips[key];
       }
 
       if (collision(ship, otherShips[key])) {
