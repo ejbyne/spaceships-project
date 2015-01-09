@@ -49,8 +49,8 @@ var socket = function(io) {
     });
 
     socket.on('ship hit ship', function(shipData) {
-      delete remoteShips[socket.id]
-      delete remoteShips[shipData.id]
+      delete remoteShips[socket.id];
+      delete remoteShips[shipData.id];
       io.emit('delete ship', {id: socket.id});
       io.emit('delete ship', {id: shipData.otherShip});
     })

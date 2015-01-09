@@ -45,7 +45,7 @@ socket.on('delete ship', function(shipData) {
   if (otherShips[shipData.id]) {
     delete otherShips[shipData.id];
   }
-  if (shipData.id == playerId) {
+  if (shipData.id === playerId) {
     alive = false;
   }
 });
@@ -137,7 +137,5 @@ function collision(entity1, entity2) {
 };
 
 render();
-
-
 
 // });
