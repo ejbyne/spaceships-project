@@ -125,6 +125,8 @@ function render() {
 
       if (collision(missile, otherShips[key])) {
         score += 1;
+        // socket.emit('ship hit ship', {otherShip: key});
+        delete otherShips[key];
       }
 
       if (collision(ship, otherShips[key])) {
