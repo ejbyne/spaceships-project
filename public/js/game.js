@@ -44,7 +44,7 @@ var otherMissiles = {};
 var alive = true;
 var playerId = false;
 
-socket.emit('start', {x: ship.x, y: ship.y, radians: ship.radians, colour: ship.colour});
+socket.emit('start', {x: ship.x, y: ship.y, radians: ship.radians, shipColour: ship.shipColour});
 
 socket.on('socket id', function(socketId) {
   playerId = socketId.id;
@@ -55,7 +55,7 @@ socket.on('add ship', function(shipData) {
   otherShips[shipData.id].x = shipData.x;
   otherShips[shipData.id].y = shipData.y;
   otherShips[shipData.id].radians = shipData.radians;
-  otherShips[shipData.id].colour = shipData.colour;
+  otherShips[shipData.id].shipColour = shipData.shipColour;
   otherMissiles[shipData.id] = new Missile();
 });
 

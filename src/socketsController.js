@@ -6,7 +6,7 @@ var socket = function(io) {
 
     console.log(socket.id + ' connected');
     for (var keys in remoteShips) {
-      io.to(socket.id).emit("add ship", {id: remoteShips[keys].id, x: remoteShips[keys].x, y: remoteShips[keys].y, radians: remoteShips[keys].radians, colour: remoteShips[keys].colour});
+      io.to(socket.id).emit("add ship", {id: remoteShips[keys].id, x: remoteShips[keys].x, y: remoteShips[keys].y, radians: remoteShips[keys].radians, shipColour: remoteShips[keys].shipColour});
     };
     remoteShips[socket.id] = {id: socket.id};
     remoteMissiles[socket.id] = {id: socket.id};
@@ -24,8 +24,8 @@ var socket = function(io) {
       remoteShips[socket.id].x = shipData.x;
       remoteShips[socket.id].y = shipData.y;
       remoteShips[socket.id].radians = shipData.radians;
-      remoteShips[socket.id].colour = shipData.colour;
-      socket.broadcast.emit("add ship", {id: socket.id, x: shipData.x, y: shipData.y, radians: shipData.radians, colour: shipData.colour});
+      remoteShips[socket.id].shipColour = shipData.shipColour;
+      socket.broadcast.emit("add ship", {id: socket.id, x: shipData.x, y: shipData.y, radians: shipData.radians, shipColour: shipData.shipColour});
       io.to(socket.id).emit("socket id", {id: socket.id});
     });
 
