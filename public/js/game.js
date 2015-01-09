@@ -124,7 +124,7 @@ function render() {
       otherShips[key].render();
 
       if (collision(missile, otherShips[key])) {
-        score++;
+        score += 1;
       }
 
       if (collision(ship, otherShips[key])) {
