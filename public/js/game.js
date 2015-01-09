@@ -45,9 +45,10 @@ socket.on('delete ship', function(shipData) {
   if (otherShips[shipData.id]) {
     delete otherShips[shipData.id];
   }
-  // if (shipData.id === playerId) {
-  //   alive = false;
-  // }
+  if (shipData.id === playerId) {
+    alive = false;
+    // socket.disconnect();
+  }
 });
 
 socket.on('delete missile', function(missileData) {
@@ -101,8 +102,10 @@ function render() {
       otherShips[key].render();
 
       if (collision(ship, otherShips[key])) {
-        socket.emit('ship hit', {otherShip: key});
         alive = false;
+        socket.emit('ship hit ship', {otherShip: key});
+        delete otherShips[key];
+        // socket.disconnect();
       }
     }
   }
@@ -117,8 +120,9 @@ function render() {
       otherMissiles[key].render();
 
       if (collision(ship, otherMissiles[key])) {
-        socket.emit('ship hit', {winner: key});
         alive = false;
+        socket.emit('missile hit ship', {otherShip: key});
+        // socket.disconnect();
       }
     }
   }
