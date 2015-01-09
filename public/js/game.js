@@ -38,7 +38,7 @@ var colours = [
   "#488627"];
 var randomColour = colours[Math.floor(Math.random() * colours.length - 1)];
 var ship = new Ship(randomColour);
-var missile = new Missile();
+var missile = new Missile("#ff0000");
 var otherShips = {};
 var otherMissiles = {};
 var alive = true;
@@ -99,7 +99,7 @@ function render() {
 
   // up arrow
   ship.isThrusting = (keys[38]);
-  
+
   if (keys[39]) {
     // right arrow
     ship.turn(1);
@@ -147,22 +147,28 @@ function render() {
       }
     }
   }
-  
+
   requestAnimationFrame(render);
 }
 
 function collision(entity1, entity2) {
 
-    var distanceX = Math.abs(entity1.x - entity2.x);
-    var distanceY = Math.abs(entity1.y - entity2.y);
+    // var distanceX = Math.abs(entity1.x - entity2.x);
+    // var distanceY = Math.abs(entity1.y - entity2.y);
+    //
+    // if (distanceX > entity1.radius + entity2.radius && distanceY > entity1.radius + entity2.radius) {
+    //     return false;
+    // }
+    //
+    // if (distanceX <= entity1.radius + entity2.radius && distanceY <= entity1.radius + entity2.radius) {
+    //     return true;
+    // }
 
-    if (distanceX > entity1.radius + entity2.radius && distanceY > entity1.radius + entity2.radius) {
-        return false;
-    }
+    var dx = (entity1.x + entity1.radius) - (entity2.x + entity2.radius);
+    var dy = (entity1.y + entity1.radius) - (entity2.y + entity2.radius);
+    var distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distanceX <= entity1.radius + entity2.radius && distanceY <= entity1.radius + entity2.radius) {
-        return true;
-    }
+    return distance < entity1.radius + entity2.radius ? true : false
 };
 
 render();

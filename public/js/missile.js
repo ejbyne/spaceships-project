@@ -1,7 +1,7 @@
 // $(document).ready(function() {
 
 var Missile = function (colour){
-  this.missileColour = colour || '#ff0000';
+  this.missileColour = colour || "#1e90ff";
   this.x = -10;
   this.y = -10;
   this.targetX = 0;
