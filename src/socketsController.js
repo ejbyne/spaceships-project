@@ -15,6 +15,7 @@ var socket = function(io) {
       console.log(socket.id + ' disconnected');
       delete remoteShips[socket.id];
       io.emit("delete ship", {id: socket.id});
+      io.emit('delete missile', {id: socket.id});
     });
 
     socket.on('start', function(shipData) {
@@ -41,19 +42,19 @@ var socket = function(io) {
       }
     });
 
-    socket.on('missile hit ship', function(winnerData) {
+    socket.on('ship hit', function(winnerData) {
       delete remoteShips[socket.id];
       delete remoteMissiles[socket.id];
-      io.emit("delete ship", {id: socket.id});
-      io.emit('delete missile', {id: socket.id});
+      socket.broadcast.emit("delete ship", {id: socket.id});
+      socket.broadcast.emit('delete missile', {id: socket.id});
     });
 
-    socket.on('ship hit ship', function(shipData) {
-      delete remoteShips[socket.id];
-      delete remoteShips[shipData.id];
-      io.emit('delete ship', {id: socket.id});
-      io.emit('delete ship', {id: shipData.otherShip});
-    })
+    // socket.on('ship hit ship', function(shipData) {
+    //   delete remoteShips[socket.id];
+    //   // delete remoteShips[shipData.id];
+    //   io.emit('delete ship', {id: socket.id});
+    //   // io.emit('delete ship', {id: shipData.otherShip});
+    // })
   });
 };
 
