@@ -1,4 +1,5 @@
 // $(document).ready(function() {
+$('#gameover').hide();
 
 var socket = io.connect('/');
 
@@ -52,6 +53,10 @@ socket.on('socket id', function(socketId) {
 })
 
 socket.on('add ship', function(shipData) {
+  $('#logo').slideUp(2000).delay(1000, function(){
+    render();
+  }).fadeOut(3000);
+
   otherShips[shipData.id] = new Ship();
   otherShips[shipData.id].x = shipData.x;
   otherShips[shipData.id].y = shipData.y;
@@ -67,6 +72,8 @@ socket.on('delete ship', function(shipData) {
   if (shipData.id === playerId) {
     alive = false;
     // socket.disconnect();
+    $('#canvas').hide();
+    $('#gameover').show();
   }
 });
 
@@ -176,6 +183,6 @@ function collision(entity1, entity2) {
     return distance < entity1.radius + entity2.radius ? true : false
 };
 
-  render();
+  //render();
 
 // });
