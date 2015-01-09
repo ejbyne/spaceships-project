@@ -1,5 +1,23 @@
+html{
+	height: 100%;
+}
 body {
 	background-color: black;
+	background-image: url(/images/star.jpg);
 	color: white;
-	height: 700px;
-};
+	min-height: 100%;
+	text-align: center;
+}
+
+#canvas {
+	/*min-height: 100%;
+	min-width: 100%;*/
+}
+
+#logo {
+	margin-top: 150px;
+}
+
+#gameover{
+	margin-top: 150px;
+}
