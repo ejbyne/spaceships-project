@@ -53,7 +53,7 @@ Ship.prototype.checkCanvasBounds = function() {
 };
 
 Ship.prototype.calculateThrust = function() {
-  if(this.isThrusting) {
+  if (this.isThrusting){
     this.velocityX += Math.cos(this.radians) * this.thrust;
     this.velocityY += Math.sin(this.radians) * this.thrust;
   }
@@ -64,12 +64,12 @@ Ship.prototype.findPoint = function() {
   this.missileLaunchY = this.y - this.launchLength * Math.sin(this.radians);
 };
 
-Ship.prototype.applyFriction = function() {
+Ship.prototype.applyFriction = function(){
   this.velocityX *= 0.98;
   this.velocityY *= 0.98;
 };
 
-Ship.prototype.applyVelocity = function() {
+Ship.prototype.applyVelocity = function(){
   this.x -= this.velocityX;
   this.y -= this.velocityY;
 };
