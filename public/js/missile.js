@@ -1,7 +1,7 @@
 // $(document).ready(function() {
 
-var Missile = function (color){
-  this.color = color || '#fff';
+var Missile = function(colour) {
+  this.missileColour = colour || '#1e90ff';
   this.x = -10;
   this.y = -10;
   this.targetX = 0;
@@ -12,13 +12,13 @@ var Missile = function (color){
   this.cos = 0;
   this.radius = 3;
   this.isFired = false;
-  this.shotSpeed = 40;
-  this.velX = 0;
-  this.velY = 0;
+  this.shotSpeed = 30;
+  this.velocityX = 0;
+  this.velocityY = 0;
   this.angle = 0;
 };
 
-Missile.prototype.setAttributes = function(targetX, targetY, startX, startY){
+Missile.prototype.setAttributes = function(targetX, targetY, startX, startY) {
     this.targetX = targetX;
     this.targetY = targetY;
     this.startX = startX;
@@ -27,7 +27,7 @@ Missile.prototype.setAttributes = function(targetX, targetY, startX, startY){
     this.y = targetY;
 };
 
-Missile.prototype.update = function(){
+Missile.prototype.update = function() {
   if(this.isFired){
     this.render();
     this.applyTrajectory();
@@ -36,16 +36,16 @@ Missile.prototype.update = function(){
   };
 };
 
-Missile.prototype.applyTrajectory = function(){
+Missile.prototype.applyTrajectory = function() {
   this.angle = Math.atan2(this.targetY - this.startY, this.targetX - this.startX);
 };
 
-Missile.prototype.applyFriction = function(){
-  this.velX *= 0.98;
-  this.velY *= 0.98;
+Missile.prototype.applyFriction = function() {
+  this.velocityX *= 0.98;
+  this.velocityY *= 0.98;
 };
 
-Missile.prototype.applyVelocity = function(){
+Missile.prototype.applyVelocity = function() {
   this.sin = Math.sin(this.angle) * this.shotSpeed;
   this.cos = Math.cos(this.angle) * this.shotSpeed;
 
@@ -55,8 +55,8 @@ Missile.prototype.applyVelocity = function(){
 };
 
 //client
-Missile.prototype.render = function(){
-  ctx.fillStyle = this.color;
+Missile.prototype.render = function() {
+  ctx.fillStyle = this.missileColour;
   ctx.beginPath();
   ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
   ctx.closePath();

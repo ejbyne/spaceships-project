@@ -2,11 +2,11 @@
 
 var socket = io.connect('/');
 
-var canvas = document.getElementById("canvas"),
-  ctx = canvas.getContext("2d"),
-  width = document.body.clientWidth;
-  height = document.body.clientHeight;
-  keys = [];
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+width = document.body.clientWidth;
+height = document.body.clientHeight;
+var keys = [];
 
 canvas.width = width;
 canvas.height = height;
@@ -21,8 +21,24 @@ document.body.addEventListener("keyup", function(e) {
     keys[e.keyCode] = false;
 });
 
-var ship = new Ship('#f00');
-var missile = new Missile('#f00');
+var colours = [
+  "#f6546a",
+  "#1e90ff",
+  "#f2d007",
+  "#0000ff",
+  "#00c7cc",
+  "#4584d3",
+  "#dd40a7",
+  "#804a2d",
+  "#48b427",
+  "#7ab5ec",
+  "#ff004c",
+  "#8974bd",
+  "#ff40a7",
+  "#488627"];
+var randomColour = colours[Math.floor(Math.random() * colours.length - 1)];
+var ship = new Ship(randomColour);
+var missile = new Missile("#ff0000");
 var otherShips = {};
 var otherMissiles = {};
 var alive = true;
@@ -76,7 +92,7 @@ function render() {
 
   // up arrow
   ship.isThrusting = (keys[38]);
-  
+
   if (keys[39]) {
     // right arrow
     ship.turn(1);
@@ -87,7 +103,7 @@ function render() {
   }
   //space
   if (keys[32]) {
-    missile.setAttributes(ship.px, ship.py, ship.x, ship.y);
+    missile.setAttributes(ship.missileLaunchX, ship.missileLaunchY, ship.x, ship.y);
     missile.isFired = true;
   }
 
@@ -132,15 +148,20 @@ function render() {
 }
 
 function collision(entity1, entity2) {
-    var distanceX = Math.abs(entity1.x - entity2.x);
-    var distanceY = Math.abs(entity1.y - entity2.y);
+    // var distanceX = Math.abs(entity1.x - entity2.x);
+    // var distanceY = Math.abs(entity1.y - entity2.y);
+    //
+    // if (distanceX > entity1.radius + entity2.radius && distanceY > entity1.radius + entity2.radius) {
+    //     return false;
+    // }
+    // if (distanceX <= entity1.radius + entity2.radius && distanceY <= entity1.radius + entity2.radius) {
+    //     return true;
+    // }
+    var dx = (entity1.x + entity1.radius) - (entity2.x + entity2.radius);
+    var dy = (entity1.y + entity1.radius) - (entity2.y + entity2.radius);
+    var distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distanceX > entity1.radius + entity2.radius && distanceY > entity1.radius + entity2.radius) {
-        return false;
-    }
-    if (distanceX <= entity1.radius + entity2.radius && distanceY <= entity1.radius + entity2.radius) {
-        return true;
-    }
+    return distance < entity1.radius + entity2.radius ? true : false
 };
 
 render();
