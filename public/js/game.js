@@ -43,6 +43,7 @@ var otherShips = {};
 var otherMissiles = {};
 var alive = true;
 var playerId = false;
+var score = 0;
 
 socket.emit('start', {x: ship.x, y: ship.y, radians: ship.radians, shipColour: ship.shipColour});
 
@@ -113,6 +114,8 @@ function render() {
     ship.update();
     socket.emit('move ship', {x: ship.x, y: ship.y, radians: ship.radians});
     ship.render();
+    missile.update();
+    socket.emit('missile location', {x: missile.x, y: missile.y});
   }
 
   if (Object.keys(otherShips).length != 0) {
@@ -120,17 +123,16 @@ function render() {
       otherShips[key].update();
       otherShips[key].render();
 
+      if (collision(missile, otherShips[key])) {
+        score++;
+      }
+
       if (collision(ship, otherShips[key])) {
         alive = false;
         socket.emit('ship hit ship', {otherShip: key});
         delete otherShips[key];
       }
     }
-  }
-
-  if (alive) {
-    missile.update();
-    socket.emit('missile location', {x: missile.x, y: missile.y});
   }
 
   if (Object.keys(otherMissiles).length != 0) {
@@ -143,6 +145,12 @@ function render() {
       }
     }
   }
+
+  ctx.fillStyle = "#fff";
+  ctx.font = "16px Helvetica";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  ctx.fillText("Score: " + score, 32, 32);
 
   requestAnimationFrame(render);
 }

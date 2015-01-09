@@ -11,7 +11,7 @@ var Missile = function (colour){
   this.startY = 0;
   this.sin = 0;
   this.cos = 0;
-  this.radius = 3;
+  this.radius = 10;
   this.isFired = false;
   this.shotSpeed = 30;
   this.velocityX = 0;
@@ -58,7 +58,7 @@ Missile.prototype.applyVelocity = function() {
 Missile.prototype.render = function() {
   ctx.fillStyle = this.missileColour;
   ctx.beginPath();
-  ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+  ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
   ctx.closePath();
   ctx.fill();
 };
