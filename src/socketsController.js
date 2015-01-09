@@ -4,8 +4,6 @@ var socket = function(io) {
 
   io.on('connection', function(socket) {
 
-
-
     console.log(socket.id + ' connected');
     for (var keys in remoteShips) {
       io.to(socket.id).emit("add ship", {
