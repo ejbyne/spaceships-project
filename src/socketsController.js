@@ -47,21 +47,27 @@ var socket = function(io) {
     });
 
     socket.on('missile hit ship', function(otherShipData) {
-      delete remoteShips[socket.id];
-      delete remoteMissiles[socket.id];
-      io.emit("delete ship", {id: socket.id});
-      io.emit('delete missile', {id: socket.id});
+      if (remoteShips[socket.id]) {
+        delete remoteShips[socket.id];
+        delete remoteMissiles[socket.id];
+        io.emit("delete ship", {id: socket.id});
+        io.emit('delete missile', {id: socket.id});
+      }
     });
 
     socket.on('ship hit ship', function(otherShipData) {
-      delete remoteShips[socket.id];
-      delete remoteShips[otherShipData.otherShip];
-      delete remoteMissiles[socket.id];
-      delete remoteMissiles[otherShipData.id];
-      io.emit('delete ship', {id: socket.id});
-      io.emit('delete ship', {id: otherShipData.otherShip});
-      io.emit('delete missile', {id: socket.id});
-      io.emit('delete missile', {id: otherShipData.otherShip});
+      if (remoteShips[socket.id]) {
+        delete remoteShips[socket.id];
+        delete remoteMissiles[socket.id];
+        io.emit('delete ship', {id: socket.id});
+        io.emit('delete missile', {id: socket.id});
+      }
+      if (remoteShips[otherShipData.otherShip]) {
+        delete remoteShips[otherShipData.otherShip];
+        delete remoteMissiles[otherShipData.otherShip];
+        io.emit('delete ship', {id: otherShipData.otherShip});
+        io.emit('delete missile', {id: otherShipData.otherShip});
+      }
     });
   });
 };
