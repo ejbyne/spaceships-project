@@ -17,7 +17,6 @@ We made the decision to use [Node.js](http://nodejs.org/) with [Express.js](http
 ## Still to do:
 
 - 
-- 
 
 
 ## Takeaway:
