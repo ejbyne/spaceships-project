@@ -3,7 +3,7 @@
 SpaceShips Game
 =======================
 
-Contributors: [Claudia](https://github.com/Callisto13), [Ming](https://github.com/ming-chan), [Atillia](https://github.com/Tr1ckX), [Ed](https://github.com/ejbyne)
+Contributors: [Claudia](https://github.com/Callisto13), [Ming](https://github.com/ming-chan), [Attila](https://github.com/Tr1ckX), [Ed](https://github.com/ejbyne)
 
 [![Code Climate](https://codeclimate.com/github/Callisto13/Maker-Wars-space-project/badges/gpa.svg)](https://codeclimate.com/github/Callisto13/Maker-Wars-space-project)
 [![Test Coverage](https://codeclimate.com/github/Callisto13/Maker-Wars-space-project/badges/coverage.svg)](https://codeclimate.com/github/Callisto13/Maker-Wars-space-project)
