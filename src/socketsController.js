@@ -53,8 +53,12 @@ var socket = function(io) {
     socket.on('ship hit ship', function(otherShipData) {
       delete remoteShips[socket.id];
       delete remoteShips[otherShipData.id];
+      delete remoteMissiles[socket.id];
+      delete remoteMissiles[otherShipData.id];
       io.emit('delete ship', {id: socket.id});
       io.emit('delete ship', {id: otherShipData.otherShip});
+      io.emit('delete missile', {id: socket.id});
+      io.emit('delete missile', {id: otherShipData.otherShip});
     });
   });
 };
