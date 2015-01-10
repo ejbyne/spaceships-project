@@ -1,4 +1,3 @@
-// $(document).ready(function() {
 $('#gameover').hide();
 
 var socket = io.connect('/');
@@ -98,9 +97,8 @@ socket.on('show missile', function(missileData) {
   }
 });
 
-function render() {
-
-  // up arrow
+function movement(){
+    // up arrow
   ship.isThrusting = (keys[38]);
 
   if (keys[39]) {
@@ -116,9 +114,9 @@ function render() {
     missile.setAttributes(ship.missileLaunchX, ship.missileLaunchY, ship.x, ship.y);
     missile.isFired = true;
   }
+}
 
-  ctx.clearRect(0, 0, width, height);
-
+function lifeCheck(){
   if (alive) {
     ship.update();
     socket.emit('move ship', {x: ship.x, y: ship.y, radians: ship.radians});
@@ -126,7 +124,9 @@ function render() {
     missile.update();
     socket.emit('missile location', {x: missile.x, y: missile.y});
   }
+}
 
+function checkShipCollision(){
   if (Object.keys(otherShips).length != 0) {
     for (var key in otherShips) {
       otherShips[key].update();
@@ -143,7 +143,9 @@ function render() {
       }
     }
   }
+}
 
+function checkMissileHit(){
   if (Object.keys(otherMissiles).length != 0) {
     for (var key in otherMissiles) {
       otherMissiles[key].render();
@@ -154,28 +156,10 @@ function render() {
       }
     }
   }
-
-  ctx.fillStyle = "#fff";
-  ctx.font = "16px Helvetica";
-  ctx.textAlign = "left";
-  ctx.textBaseline = "top";
-  ctx.fillText("Score: " + score, 32, 32);
-
-  requestAnimationFrame(render);
 }
 
 function collision(entity1, entity2) {
 
-    // var distanceX = Math.abs(entity1.x - entity2.x);
-    // var distanceY = Math.abs(entity1.y - entity2.y);
-    //
-    // if (distanceX > entity1.radius + entity2.radius && distanceY > entity1.radius + entity2.radius) {
-    //     return false;
-    // }
-    //
-    // if (distanceX <= entity1.radius + entity2.radius && distanceY <= entity1.radius + entity2.radius) {
-    //     return true;
-    // }
     var dx = (entity1.x + entity1.radius) - (entity2.x + entity2.radius);
     var dy = (entity1.y + entity1.radius) - (entity2.y + entity2.radius);
     var distance = Math.sqrt(dx * dx + dy * dy);
@@ -183,6 +167,24 @@ function collision(entity1, entity2) {
     return distance < entity1.radius + entity2.radius ? true : false
 };
 
+function renderScore(){
+  ctx.fillStyle = "#fff";
+  ctx.font = "16px Helvetica";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "top";
+  ctx.fillText("Score: " + score, 32, 32);
+}
+
+function render() {
+  movement();
+  ctx.clearRect(0, 0, width, height);
+  lifeCheck();
+  checkShipCollision();
+  checkMissileHit();
+  renderScore();
+  requestAnimationFrame(render);
+}
+
+
   //render();
 
-// });
