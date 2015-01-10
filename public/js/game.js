@@ -96,7 +96,7 @@ socket.on('show missile', function(missileData) {
   }
 });
 
-function movement() {
+var movement = function() {
   ship.isThrusting = (keys[38]);
   if (keys[39]) {
     ship.turn(1);
@@ -110,7 +110,7 @@ function movement() {
   }
 }
 
-function updatePlayerShipAndMissile() {
+var updatePlayerShipAndMissile = function() {
   if (alive) {
     ship.update();
     socket.emit('move ship', {x: ship.x, y: ship.y, radians: ship.radians});
@@ -120,7 +120,7 @@ function updatePlayerShipAndMissile() {
   }
 }
 
-function updateOtherShips() {
+var updateOtherShips = function() {
   if (Object.keys(otherShips).length != 0) {
     for (var key in otherShips) {
       otherShips[key].update();
@@ -130,7 +130,7 @@ function updateOtherShips() {
   }
 }
 
-function updateOtherMissiles() {
+var updateOtherMissiles = function() {
   if (Object.keys(otherMissiles).length != 0) {
     for (var key in otherMissiles) {
       otherMissiles[key].render();
@@ -139,7 +139,7 @@ function updateOtherMissiles() {
   }
 }
 
-function updateScore() {
+var updateScore = function() {
   ctx.fillStyle = "#fff";
   ctx.font = "16px Helvetica";
   ctx.textAlign = "left";
@@ -147,7 +147,7 @@ function updateScore() {
   ctx.fillText("Score: " + score, 32, 32);
 }
 
-function checkOtherShipsCollisions(key) {
+var checkOtherShipsCollisions = function(key) {
   if (collision(missile, otherShips[key])) {
     score += 1;
   }
@@ -158,21 +158,21 @@ function checkOtherShipsCollisions(key) {
   } 
 }
 
-function checkOtherMissilesCollisions(key) {
+var checkOtherMissilesCollisions = function(key) {
   if (collision(ship, otherMissiles[key])) {
     alive = false;
     socket.emit('missile hit ship', {otherShip: key});
   }
 }
 
-function collision(entity1, entity2) {
+var collision = function(entity1, entity2) {
     var dx = (entity1.x + entity1.radius) - (entity2.x + entity2.radius);
     var dy = (entity1.y + entity1.radius) - (entity2.y + entity2.radius);
     var distance = Math.sqrt(dx * dx + dy * dy);
     return distance < entity1.radius + entity2.radius ? true : false
 };
 
-function render() {
+var render = function() {
   movement();
   ctx.clearRect(0, 0, width, height);
   updatePlayerShipAndMissile();
