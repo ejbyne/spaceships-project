@@ -1,6 +1,3 @@
-// $(document).ready(function() {
-
-
 var Missile = function (colour){
   this.missileColour = colour || "#1e90ff";
   this.x = -10;
@@ -62,5 +59,3 @@ Missile.prototype.render = function() {
   ctx.closePath();
   ctx.fill();
 };
-
-// });

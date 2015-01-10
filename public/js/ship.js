@@ -1,5 +1,3 @@
-// $(document).ready(function() {
-
 var Ship = function (shipColour) {
   this.x = 32 + (Math.random() * (canvas.width - 64));
   this.y = 32 + (Math.random() * (canvas.height - 64));
@@ -121,4 +119,3 @@ Ship.prototype.render = function() {
   ctx.fill();
   ctx.restore();
 };
-// });
