@@ -34,7 +34,6 @@ Ship.prototype.update = function() {
   this.findPoint();
   this.applyFriction();
   this.applyVelocity();
-  // socket.emit('move ship', {x: this.x, y: this.y});
 };
 
 Ship.prototype.checkCanvasBounds = function() {

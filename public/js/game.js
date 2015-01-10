@@ -70,7 +70,6 @@ socket.on('delete ship', function(shipData) {
   }
   if (shipData.id === playerId) {
     alive = false;
-    // socket.disconnect();
     $('#canvas').hide();
     $('#gameover').show();
   }
@@ -97,26 +96,21 @@ socket.on('show missile', function(missileData) {
   }
 });
 
-function movement(){
-    // up arrow
+function movement() {
   ship.isThrusting = (keys[38]);
-
   if (keys[39]) {
-    // right arrow
     ship.turn(1);
   }
   if (keys[37]) {
-    // left arrow
     ship.turn(-1);
   }
-  //space
   if (keys[32]) {
     missile.setAttributes(ship.missileLaunchX, ship.missileLaunchY, ship.x, ship.y);
     missile.isFired = true;
   }
 }
 
-function lifeCheck(){
+function updatePlayerShipAndMissile() {
   if (alive) {
     ship.update();
     socket.emit('move ship', {x: ship.x, y: ship.y, radians: ship.radians});
@@ -126,48 +120,26 @@ function lifeCheck(){
   }
 }
 
-function checkShipCollision(){
+function updateOtherShips() {
   if (Object.keys(otherShips).length != 0) {
     for (var key in otherShips) {
       otherShips[key].update();
       otherShips[key].render();
-
-      if (collision(missile, otherShips[key])) {
-        score += 1;
-      }
-
-      if (collision(ship, otherShips[key])) {
-        alive = false;
-        socket.emit('ship hit ship', {otherShip: key});
-        delete otherShips[key];
-      }
+      checkOtherShipsCollisions(key);
     }
   }
 }
 
-function checkMissileHit(){
+function updateOtherMissiles() {
   if (Object.keys(otherMissiles).length != 0) {
     for (var key in otherMissiles) {
       otherMissiles[key].render();
-
-      if (collision(ship, otherMissiles[key])) {
-        alive = false;
-        socket.emit('missile hit ship', {otherShip: key});
-      }
+      checkOtherMissilesCollisions(key);
     }
   }
 }
 
-function collision(entity1, entity2) {
-
-    var dx = (entity1.x + entity1.radius) - (entity2.x + entity2.radius);
-    var dy = (entity1.y + entity1.radius) - (entity2.y + entity2.radius);
-    var distance = Math.sqrt(dx * dx + dy * dy);
-
-    return distance < entity1.radius + entity2.radius ? true : false
-};
-
-function renderScore(){
+function updateScore() {
   ctx.fillStyle = "#fff";
   ctx.font = "16px Helvetica";
   ctx.textAlign = "left";
@@ -175,16 +147,37 @@ function renderScore(){
   ctx.fillText("Score: " + score, 32, 32);
 }
 
+function checkOtherShipsCollisions(key) {
+  if (collision(missile, otherShips[key])) {
+    score += 1;
+  }
+  if (collision(ship, otherShips[key])) {
+    alive = false;
+    socket.emit('ship hit ship', {otherShip: key});
+    delete otherShips[key];
+  } 
+}
+
+function checkOtherMissilesCollisions(key) {
+  if (collision(ship, otherMissiles[key])) {
+    alive = false;
+    socket.emit('missile hit ship', {otherShip: key});
+  }
+}
+
+function collision(entity1, entity2) {
+    var dx = (entity1.x + entity1.radius) - (entity2.x + entity2.radius);
+    var dy = (entity1.y + entity1.radius) - (entity2.y + entity2.radius);
+    var distance = Math.sqrt(dx * dx + dy * dy);
+    return distance < entity1.radius + entity2.radius ? true : false
+};
+
 function render() {
   movement();
   ctx.clearRect(0, 0, width, height);
-  lifeCheck();
-  checkShipCollision();
-  checkMissileHit();
-  renderScore();
+  updatePlayerShipAndMissile();
+  updateOtherShips();
+  updateOtherMissiles();
+  updateScore();
   requestAnimationFrame(render);
 }
-
-
-  //render();
-
