@@ -1,4 +1,4 @@
-<img src="./public/images/logo.png">
+<img src="readmelogo.png">
 
 SpaceShips Game
 =======================
