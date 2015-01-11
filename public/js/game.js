@@ -28,10 +28,10 @@ Game.prototype.movement = function() {
 Game.prototype.updatePlayerShipAndMissile = function() {
   if (this.alive) {
     this.ship.update();
-    this.socket.emit('move ship', {x: this.ship.x, y: this.ship.y, radians: this.ship.radians});
+    this.socket.emit('send ship data', {x: this.ship.x, y: this.ship.y, radians: this.ship.radians});
     this.ship.render();
     this.missile.update();
-    this.socket.emit('missile location', {x: this.missile.x, y: this.missile.y});
+    this.socket.emit('send missile data', {x: this.missile.x, y: this.missile.y});
   }
 }
 

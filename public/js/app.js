@@ -72,7 +72,7 @@ $(document).ready(function() {
     }
   });
 
-  socket.on('move ship', function(shipData) {
+  socket.on('update ship', function(shipData) {
     if (game.otherShips[shipData.id]) {
       game.otherShips[shipData.id].x = shipData.x;
       game.otherShips[shipData.id].y = shipData.y;
@@ -80,7 +80,7 @@ $(document).ready(function() {
     }
   });
 
-  socket.on('show missile', function(missileData) {
+  socket.on('update missile', function(missileData) {
     if (game.otherMissiles[missileData.id]) {
       game.otherMissiles[missileData.id].x = missileData.x;
       game.otherMissiles[missileData.id].y = missileData.y;
