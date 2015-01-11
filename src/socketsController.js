@@ -1,4 +1,5 @@
 var socket = function(io) {
+  
   var remoteShips = {};
   var remoteMissiles = {};
 
@@ -7,10 +8,10 @@ var socket = function(io) {
     console.log(socket.id + ' connected');
     for (var keys in remoteShips) {
       io.to(socket.id).emit("add ship", {
-        id: remoteShips[keys].id,
-        x: remoteShips[keys].x,
-        y: remoteShips[keys].y,
-        radians: remoteShips[keys].radians,
+        id:         remoteShips[keys].id,
+        x:          remoteShips[keys].x,
+        y:          remoteShips[keys].y,
+        radians:    remoteShips[keys].radians,
         shipColour: remoteShips[keys].shipColour
       });
     };
@@ -26,16 +27,15 @@ var socket = function(io) {
     });
 
     socket.on('start', function(shipData) {
-      console.log('Player created');
       remoteShips[socket.id].x = shipData.x;
       remoteShips[socket.id].y = shipData.y;
       remoteShips[socket.id].radians = shipData.radians;
       remoteShips[socket.id].shipColour = shipData.shipColour;
       socket.broadcast.emit("add ship", {
-        id: socket.id,
-        x: shipData.x,
-        y: shipData.y,
-        radians: shipData.radians,
+        id:         socket.id,
+        x:          shipData.x,
+        y:          shipData.y,
+        radians:    shipData.radians,
         shipColour: shipData.shipColour
       });
       io.to(socket.id).emit("socket id", {id: socket.id});
@@ -47,10 +47,10 @@ var socket = function(io) {
         remoteShips[socket.id].y = shipData.y;
         remoteShips[socket.id].radians = shipData.radians;
         socket.broadcast.emit("move ship", {
-          id: remoteShips[socket.id].id,
-          x: remoteShips[socket.id].x,
-          y: remoteShips[socket.id].y,
-          radians: remoteShips[socket.id].radians
+          id:       remoteShips[socket.id].id,
+          x:        remoteShips[socket.id].x,
+          y:        remoteShips[socket.id].y,
+          radians:  remoteShips[socket.id].radians
         })
       }
     });
@@ -60,9 +60,9 @@ var socket = function(io) {
         remoteMissiles[socket.id].x = missileData.x;
         remoteMissiles[socket.id].y = missileData.y;
         socket.broadcast.emit('show missile', {
-          id: remoteMissiles[socket.id].id,
-          x: remoteMissiles[socket.id].x,
-          y: remoteMissiles[socket.id].y
+          id:       remoteMissiles[socket.id].id,
+          x:        remoteMissiles[socket.id].x,
+          y:        remoteMissiles[socket.id].y
         })
       }
     });
@@ -82,12 +82,6 @@ var socket = function(io) {
         delete remoteMissiles[socket.id];
         io.emit('delete ship', {id: socket.id});
         io.emit('delete missile', {id: socket.id});
-      }
-      if (remoteShips[otherShipData.otherShip]) {
-        delete remoteShips[otherShipData.otherShip];
-        delete remoteMissiles[otherShipData.otherShip];
-        io.emit('delete ship', {id: otherShipData.otherShip});
-        io.emit('delete missile', {id: otherShipData.otherShip});
       }
     });
   });

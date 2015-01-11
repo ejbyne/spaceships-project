@@ -68,7 +68,7 @@ Game.prototype.checkOtherShipsCollisions = function(key) {
   }
   if (this.collision(this.ship, this.otherShips[key])) {
     this.alive = false;
-    this.socket.emit('ship hit ship', {otherShip: key});
+    this.socket.emit('ship hit ship');
     delete this.otherShips[key];
   } 
 }
@@ -76,7 +76,7 @@ Game.prototype.checkOtherShipsCollisions = function(key) {
 Game.prototype.checkOtherMissilesCollisions = function(key) {
   if (this.collision(this.ship, this.otherMissiles[key])) {
     this.alive = false;
-    this.socket.emit('missile hit ship', {otherShip: key});
+    this.socket.emit('missile hit ship');
   }
 }
 
