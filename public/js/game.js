@@ -36,21 +36,17 @@ Game.prototype.updatePlayerShipAndMissile = function() {
 }
 
 Game.prototype.updateOtherShips = function() {
-  if (Object.keys(this.otherShips).length > 0) {
-    for (var key in this.otherShips) {
-      this.otherShips[key].update();
-      this.otherShips[key].render();
-      this.checkOtherShipsCollisions(key);
-    }
+  for (var key in this.otherShips) {
+    this.checkOtherShipsCollisions(key);
+    this.otherShips[key].update();
+    this.otherShips[key].render();
   }
 }
 
 Game.prototype.updateOtherMissiles = function() {
-  if (Object.keys(this.otherMissiles).length > 0) {
-    for (var key in this.otherMissiles) {
-      this.otherMissiles[key].render();
-      this.checkOtherMissilesCollisions(key);
-    }
+  for (var key in this.otherMissiles) {
+    this.checkOtherMissilesCollisions(key);
+    this.otherMissiles[key].render();
   }
 }
 
@@ -63,14 +59,13 @@ Game.prototype.updateScore = function() {
 }
 
 Game.prototype.checkOtherShipsCollisions = function(key) {
+  if (this.collision(this.ship, this.otherShips[key])) {
+    this.alive = false;
+    this.socket.emit('ship hit ship', {id: key});
+  }
   if (this.collision(this.missile, this.otherShips[key])) {
     this.score += 1;
   }
-  if (this.collision(this.ship, this.otherShips[key])) {
-    this.alive = false;
-    this.socket.emit('ship hit ship');
-    delete this.otherShips[key];
-  } 
 }
 
 Game.prototype.checkOtherMissilesCollisions = function(key) {

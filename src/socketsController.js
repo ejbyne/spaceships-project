@@ -3,6 +3,15 @@ var socket = function(io) {
   var remoteShips = {};
   var remoteMissiles = {};
 
+  var deleteShipAndMissile = function(shipId) {
+    if (remoteShips[shipId]) { 
+      delete remoteShips[shipId];
+      delete remoteMissiles[shipId];
+      io.emit("delete ship", {id: shipId});
+      io.emit('delete missile', {id: shipId});
+    }
+  }
+
   io.on('connection', function(socket) {
 
     console.log(socket.id + ' connected');
@@ -20,12 +29,7 @@ var socket = function(io) {
 
     socket.on('disconnect', function() {
       console.log(socket.id + ' disconnected');
-      if (remoteShips[socket.id]) { 
-        delete remoteShips[socket.id];
-        delete remoteMissiles[socket.id];
-        io.emit("delete ship", {id: socket.id});
-        io.emit('delete missile', {id: socket.id});
-      }
+      deleteShipAndMissile(socket.id);
     });
 
     socket.on('start', function(shipData) {
@@ -69,24 +73,17 @@ var socket = function(io) {
       }
     });
 
-    socket.on('missile hit ship', function(otherShipData) {
-      if (remoteShips[socket.id]) {
-        delete remoteShips[socket.id];
-        delete remoteMissiles[socket.id];
-        io.emit("delete ship", {id: socket.id});
-        io.emit('delete missile', {id: socket.id});
-      }
+    socket.on('missile hit ship', function() {
+      deleteShipAndMissile(socket.id);
     });
 
     socket.on('ship hit ship', function(otherShipData) {
-      if (remoteShips[socket.id]) {
-        delete remoteShips[socket.id];
-        delete remoteMissiles[socket.id];
-        io.emit('delete ship', {id: socket.id});
-        io.emit('delete missile', {id: socket.id});
-      }
+      deleteShipAndMissile(otherShipData.id);
+      deleteShipAndMissile(socket.id);
     });
+
   });
+
 };
 
 module.exports = socket;
