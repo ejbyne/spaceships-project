@@ -89,3 +89,5 @@ Game.prototype._isCollision = function(entity1, entity2) {
     var distance = Math.sqrt(dx * dx + dy * dy);
     return distance < entity1.radius + entity2.radius ? true : false;
 };
+
+module.exports = Game;

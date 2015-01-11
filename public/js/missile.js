@@ -57,3 +57,5 @@ Missile.prototype._applyVelocity = function() {
   this.x += this.cos;
   this.y += this.sin;
 };
+
+module.exports = Missile;
