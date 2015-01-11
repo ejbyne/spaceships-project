@@ -11,7 +11,15 @@ var Game = function(socket, ctx, ship, missile) {
   this.keys = [];
 }
 
-Game.prototype.movement = function() {
+Game.prototype.updateGame = function() {
+  this._updateMovement();
+  this._updatePlayerShipAndMissile();
+  this._updateOtherShips();
+  this._updateOtherMissiles();
+  this._updateScore();
+}
+
+Game.prototype._updateMovement = function() {
   this.ship.isThrusting = (this.keys[38]);
   if (this.keys[39]) {
     this.ship.turn(1);
@@ -25,32 +33,32 @@ Game.prototype.movement = function() {
   }
 }
 
-Game.prototype.updatePlayerShipAndMissile = function() {
+Game.prototype._updatePlayerShipAndMissile = function() {
   if (this.alive) {
     this.ship.update();
-    this.socket.emit('send ship data', {x: this.ship.x, y: this.ship.y, radians: this.ship.radians});
     this.ship.render();
     this.missile.update();
+    this.missile.render();
+    this.socket.emit('send ship data', {x: this.ship.x, y: this.ship.y, radians: this.ship.radians});
     this.socket.emit('send missile data', {x: this.missile.x, y: this.missile.y});
   }
 }
 
-Game.prototype.updateOtherShips = function() {
+Game.prototype._updateOtherShips = function() {
   for (var key in this.otherShips) {
-    this.checkOtherShipsCollisions(key);
-    this.otherShips[key].update();
+    this._checkOtherShipsCollisions(key);
     this.otherShips[key].render();
   }
 }
 
-Game.prototype.updateOtherMissiles = function() {
+Game.prototype._updateOtherMissiles = function() {
   for (var key in this.otherMissiles) {
-    this.checkOtherMissilesCollisions(key);
+    this._checkOtherMissilesCollisions(key);
     this.otherMissiles[key].render();
   }
 }
 
-Game.prototype.updateScore = function() {
+Game.prototype._updateScore = function() {
   this.ctx.fillStyle = "#fff";
   this.ctx.font = "16px Helvetica";
   this.ctx.textAlign = "left";
@@ -58,24 +66,24 @@ Game.prototype.updateScore = function() {
   this.ctx.fillText("Score: " + this.score, 32, 32);
 }
 
-Game.prototype.checkOtherShipsCollisions = function(key) {
-  if (this.collision(this.ship, this.otherShips[key])) {
+Game.prototype._checkOtherShipsCollisions = function(key) {
+  if (this._isCollision(this.ship, this.otherShips[key])) {
     this.alive = false;
     this.socket.emit('ship hit ship', {id: key});
   }
-  if (this.collision(this.missile, this.otherShips[key])) {
+  if (this._isCollision(this.missile, this.otherShips[key])) {
     this.score += 1;
   }
 }
 
-Game.prototype.checkOtherMissilesCollisions = function(key) {
-  if (this.collision(this.ship, this.otherMissiles[key])) {
+Game.prototype._checkOtherMissilesCollisions = function(key) {
+  if (this._isCollision(this.ship, this.otherMissiles[key])) {
     this.alive = false;
     this.socket.emit('missile hit ship');
   }
 }
 
-Game.prototype.collision = function(entity1, entity2) {
+Game.prototype._isCollision = function(entity1, entity2) {
     var dx = (entity1.x + entity1.radius) - (entity2.x + entity2.radius);
     var dy = (entity1.y + entity1.radius) - (entity2.y + entity2.radius);
     var distance = Math.sqrt(dx * dx + dy * dy);

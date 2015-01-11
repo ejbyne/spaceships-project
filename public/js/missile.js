@@ -28,29 +28,10 @@ Missile.prototype.setAttributes = function(targetX, targetY, startX, startY) {
 
 Missile.prototype.update = function() {
   if(this.isFired){
-    this.render();
-    this.applyTrajectory();
-    this.applyFriction();
-    this.applyVelocity();
+    this._applyTrajectory();
+    this._applyFriction();
+    this._applyVelocity();
   };
-};
-
-Missile.prototype.applyTrajectory = function() {
-  this.angle = Math.atan2(this.targetY - this.startY, this.targetX - this.startX);
-};
-
-Missile.prototype.applyFriction = function() {
-  this.velocityX *= 0.98;
-  this.velocityY *= 0.98;
-};
-
-Missile.prototype.applyVelocity = function() {
-  this.sin = Math.sin(this.angle) * this.shotSpeed;
-  this.cos = Math.cos(this.angle) * this.shotSpeed;
-
-  this.x += this.cos;
-  this.y += this.sin;
-
 };
 
 Missile.prototype.render = function() {
@@ -59,4 +40,20 @@ Missile.prototype.render = function() {
   this.ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
   this.ctx.closePath();
   this.ctx.fill();
+};
+
+Missile.prototype._applyTrajectory = function() {
+  this.angle = Math.atan2(this.targetY - this.startY, this.targetX - this.startX);
+};
+
+Missile.prototype._applyFriction = function() {
+  this.velocityX *= 0.98;
+  this.velocityY *= 0.98;
+};
+
+Missile.prototype._applyVelocity = function() {
+  this.sin = Math.sin(this.angle) * this.shotSpeed;
+  this.cos = Math.cos(this.angle) * this.shotSpeed;
+  this.x += this.cos;
+  this.y += this.sin;
 };

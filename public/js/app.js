@@ -15,12 +15,8 @@ $(document).ready(function() {
   var game = new Game(socket, ctx, ship, missile);
   
   var render = function() {
-    game.movement();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    game.updatePlayerShipAndMissile();
-    game.updateOtherShips();
-    game.updateOtherMissiles();
-    game.updateScore();
+    game.updateGame();
     requestAnimationFrame(render);
   }
 
