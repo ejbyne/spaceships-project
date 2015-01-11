@@ -10,14 +10,14 @@ var Ship = function (canvas, ctx, shipColour) {
   this.angle = 0;
   this.radians = 0;
   this.shipColour = shipColour || "#ffffff";
-  this.thrustStrokeColour = "#ff0000"
-  this.thrustFillColour = "#ff8000"
+  this.thrustStrokeColour = "#ff0000";
+  this.thrustFillColour = "#ff8000";
   this.launchLength = 15;
   this.missileLaunchX = 0;
   this.missileLaunchY = 0;
   this.velocityX = 0;
   this.velocityY = 0;
-}
+};
 
 Ship.prototype.turn = function(dir) {
     this.angle += this.turnSpeed * dir;
