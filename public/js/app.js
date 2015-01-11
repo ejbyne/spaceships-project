@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-  $('#gameover').hide();
-
   var socket = io.connect('/');
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
@@ -36,6 +34,8 @@ $(document).ready(function() {
       game.keys[e.keyCode] = false;
   });
 
+  $('#waiting').fadeIn(3000);
+
   socket.emit('start', {x: ship.x, y: ship.y, radians: ship.radians, shipColour: ship.shipColour});
 
   socket.on('socket id', function(socketId) {
@@ -43,6 +43,7 @@ $(document).ready(function() {
   })
 
   socket.on('add ship', function(shipData) {
+    $('#waiting').hide();
     $('#logo').slideUp(2000).delay(1000, function(){
       render();
     }).fadeOut(3000);
