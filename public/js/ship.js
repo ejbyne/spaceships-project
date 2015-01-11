@@ -1,7 +1,8 @@
-var Ship = function (ctx, shipColour) {
+var Ship = function (canvas, ctx, shipColour) {
+  this.canvas = canvas;
   this.ctx = ctx;
-  this.x = 32 + (Math.random() * (canvas.width - 64));
-  this.y = 32 + (Math.random() * (canvas.height - 64));
+  this.x = 32 + (Math.random() * (this.canvas.width - 64));
+  this.y = 32 + (Math.random() * (this.canvas.height - 64));
   this.radius = 10;
 
   this.isThrusting = false;
@@ -37,15 +38,15 @@ Ship.prototype.update = function() {
 
 Ship.prototype.checkCanvasBounds = function() {
   if(this.x < this.radius){
-    this.x = canvas.width;
+    this.x = this.canvas.width;
   }
-  if(this.x > canvas.width){
+  if(this.x > this.canvas.width){
     this.x = this.radius;
   }
   if(this.y < this.radius){
-    this.y = canvas.height;
+    this.y = this.canvas.height;
   }
-  if(this.y > canvas.height){
+  if(this.y > this.canvas.height){
     this.y = this.radius;
   }
 };

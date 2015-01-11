@@ -3,27 +3,22 @@ $(document).ready(function() {
   $('#gameover').hide();
 
   var socket = io.connect('/');
-
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
-  width = document.body.clientWidth;
-  height = document.body.clientHeight;
-  canvas.width = width;
-  canvas.height = height;
-
+  canvas.width = document.body.clientWidth;
+  canvas.height = document.body.clientHeight;
   var colours = ["#f6546a", "#1e90ff", "#f2d007", "#0000ff",
                  "#00c7cc", "#4584d3", "#dd40a7", "#804a2d",
                  "#48b427", "#7ab5ec", "#ff004c", "#8974bd",
                  "#ff40a7", "#488627"];
   var randomColour = colours[Math.floor(Math.random() * colours.length - 1)];
-  
-  var ship = new Ship(ctx, randomColour);
+  var ship = new Ship(canvas, ctx, randomColour);
   var missile = new Missile(ctx, "#ff0000");
   var game = new Game(socket, ctx, ship, missile);
-
+  
   var render = function() {
     game.movement();
-    ctx.clearRect(0, 0, width, height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.updatePlayerShipAndMissile();
     game.updateOtherShips();
     game.updateOtherMissiles();
@@ -51,7 +46,7 @@ $(document).ready(function() {
     $('#logo').slideUp(2000).delay(1000, function(){
       render();
     }).fadeOut(3000);
-    game.otherShips[shipData.id] = new Ship(ctx);
+    game.otherShips[shipData.id] = new Ship(canvas, ctx);
     game.otherShips[shipData.id].x = shipData.x;
     game.otherShips[shipData.id].y = shipData.y;
     game.otherShips[shipData.id].radians = shipData.radians;
