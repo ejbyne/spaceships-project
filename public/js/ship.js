@@ -1,4 +1,5 @@
-var Ship = function (shipColour) {
+var Ship = function (ctx, shipColour) {
+  this.ctx = ctx;
   this.x = 32 + (Math.random() * (canvas.width - 64));
   this.y = 32 + (Math.random() * (canvas.height - 64));
   this.radius = 10;
@@ -72,50 +73,50 @@ Ship.prototype.applyVelocity = function(){
 };
 
 Ship.prototype.render = function() {
-  ctx.save();
-  ctx.translate(this.x,this.y);
-  ctx.rotate(this.radians);
+  this.ctx.save();
+  this.ctx.translate(this.x,this.y);
+  this.ctx.rotate(this.radians);
 
   if (this.isThrusting) {
-    ctx.beginPath();
-    ctx.moveTo(20, 0);
-    ctx.lineTo(12.5, 5);
-    ctx.lineTo(10, 0);
-    ctx.lineTo(12.5, -5);
-    ctx.lineTo(20, 0);
-    ctx.fillStyle = this.thrustFillColour;
-    ctx.fill();
-    ctx.strokeStyle = this.thrustStrokeColour;
-    ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.moveTo(20, 0);
+    this.ctx.lineTo(12.5, 5);
+    this.ctx.lineTo(10, 0);
+    this.ctx.lineTo(12.5, -5);
+    this.ctx.lineTo(20, 0);
+    this.ctx.fillStyle = this.thrustFillColour;
+    this.ctx.fill();
+    this.ctx.strokeStyle = this.thrustStrokeColour;
+    this.ctx.stroke();
 
-    ctx.beginPath();
-    ctx.moveTo(17.5, -5);
-    ctx.lineTo(15, -2.5);
-    ctx.lineTo(12.5, -5);
-    ctx.lineTo(15, -7.5);
-    ctx.fillStyle = this.thrustFillColour;
-    ctx.fill();
-    ctx.strokeStyle = this.thrustStrokeColour;
-    ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.moveTo(17.5, -5);
+    this.ctx.lineTo(15, -2.5);
+    this.ctx.lineTo(12.5, -5);
+    this.ctx.lineTo(15, -7.5);
+    this.ctx.fillStyle = this.thrustFillColour;
+    this.ctx.fill();
+    this.ctx.strokeStyle = this.thrustStrokeColour;
+    this.ctx.stroke();
 
-    ctx.beginPath();
-    ctx.moveTo(17.5, 5);
-    ctx.lineTo(15, 2.5);
-    ctx.lineTo(12.5, 5);
-    ctx.lineTo(15, 7.5);
-    ctx.fillStyle = this.thrustFillColour;
-    ctx.fill();
-    ctx.strokeStyle = this.thrustStrokeColour;
-    ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.moveTo(17.5, 5);
+    this.ctx.lineTo(15, 2.5);
+    this.ctx.lineTo(12.5, 5);
+    this.ctx.lineTo(15, 7.5);
+    this.ctx.fillStyle = this.thrustFillColour;
+    this.ctx.fill();
+    this.ctx.strokeStyle = this.thrustStrokeColour;
+    this.ctx.stroke();
   }
 
-  ctx.beginPath();
-  ctx.moveTo(-5, 0);
-  ctx.lineTo(15, 10);
-  ctx.lineTo(10, 0);
-  ctx.lineTo(15, -10);
-  ctx.lineTo(-5, 0);
-  ctx.fillStyle = this.shipColour;
-  ctx.fill();
-  ctx.restore();
+  this.ctx.beginPath();
+  this.ctx.moveTo(-5, 0);
+  this.ctx.lineTo(15, 10);
+  this.ctx.lineTo(10, 0);
+  this.ctx.lineTo(15, -10);
+  this.ctx.lineTo(-5, 0);
+  this.ctx.fillStyle = this.shipColour;
+  this.ctx.fill();
+  this.ctx.restore();
 };
