@@ -117,5 +117,3 @@ Ship.prototype._applyVelocity = function(){
   this.x -= this.velocityX;
   this.y -= this.velocityY;
 };
-
-module.exports = Ship;

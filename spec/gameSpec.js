@@ -1,10 +1,6 @@
-var Game = require('../public/js/game');
-var Ship = require('../public/js/ship');
-var Missile = require('../public/js/missile');
-
 describe('Game', function() {
 
-  var game;
+  var ship, missile, game;
 
   beforeEach(function() {
     ship = new Ship('canvasStub', 'ctxStub');

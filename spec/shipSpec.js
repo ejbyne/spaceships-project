@@ -1,5 +1,3 @@
-var Ship = require('../public/js/ship');
-
 describe('Ship', function() {
 
   var ship;

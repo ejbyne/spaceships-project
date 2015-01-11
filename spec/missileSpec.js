@@ -1,5 +1,3 @@
-var Missile = require('../public/js/missile');
-
 describe('Missile', function() {
 
   var missile;
