@@ -18,7 +18,7 @@ $(document).ready(function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.updateGame();
     requestAnimationFrame(render);
-  }
+  };
 
   document.body.style.overflow = 'hidden';
 
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
   socket.on('socket id', function(socketId) {
     game.playerId = socketId.id;
-  })
+  });
 
   socket.on('add ship', function(shipData) {
     $('#waiting').hide();

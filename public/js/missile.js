@@ -31,7 +31,7 @@ Missile.prototype.update = function() {
     this._applyTrajectory();
     this._applyFriction();
     this._applyVelocity();
-  };
+  }
 };
 
 Missile.prototype.render = function() {

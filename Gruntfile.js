@@ -1,17 +1,30 @@
-module.exports = function(grunt) {
+module.exports = function(grunt){
 
- grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    mocha_casperjs: {
+  grunt.initConfig({
+    jasmine_node: {
       options: {
+        forceExit: true,
       },
-      files: {
-        src: ['test/**/*']
+      all: ['spec/']
+      },
+
+    jshint: {
+        src: ['src/socketsController.js']
+    },
+    
+    watch: {
+      scripts: {
+        files: ['public/js/*.js'],
+        tasks: ['jshint']
       }
     }
-  })
-  grunt.loadNpmTasks('grunt-mocha-casperjs');
-  grunt.loadNpmTasks('grunt-jasmine');
 
-  grunt.registerTask('default', ['jasmine']);
+  });
+
+  grunt.loadNpmTasks('grunt-jasmine-node');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+
+  grunt.registerTask('default', ['jasmine_node', 'jshint']);
+
 };

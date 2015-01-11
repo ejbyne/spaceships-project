@@ -10,7 +10,7 @@ var socket = function(io) {
       io.emit("delete ship", {id: shipId});
       io.emit('delete missile', {id: shipId});
     }
-  }
+  };
 
   io.on('connection', function(socket) {
 
@@ -57,7 +57,7 @@ var socket = function(io) {
           x:        remoteShips[socket.id].x,
           y:        remoteShips[socket.id].y,
           radians:  remoteShips[socket.id].radians
-        })
+        });
       }
     });
 
@@ -69,7 +69,7 @@ var socket = function(io) {
           id:       remoteMissiles[socket.id].id,
           x:        remoteMissiles[socket.id].x,
           y:        remoteMissiles[socket.id].y
-        })
+        });
       }
     });
 
