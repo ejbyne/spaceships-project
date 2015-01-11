@@ -20,8 +20,8 @@ var Ship = function (canvas, ctx, shipColour) {
 };
 
 Ship.prototype.turn = function(dir) {
-    this.angle += this.turnSpeed * dir;
-    this.radians = this.angle/Math.PI * 180;
+  this.angle += this.turnSpeed * dir;
+  this.radians = this.angle/Math.PI * 180;
 };
 
 Ship.prototype.update = function() {

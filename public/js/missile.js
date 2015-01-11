@@ -18,12 +18,12 @@ var Missile = function (ctx, colour){
 };
 
 Missile.prototype.setAttributes = function(targetX, targetY, startX, startY) {
-    this.targetX = targetX;
-    this.targetY = targetY;
-    this.startX = startX;
-    this.startY = startY;
-    this.x = targetX;
-    this.y = targetY;
+  this.targetX = targetX;
+  this.targetY = targetY;
+  this.startX = startX;
+  this.startY = startY;
+  this.x = targetX;
+  this.y = targetY;
 };
 
 Missile.prototype.update = function() {
