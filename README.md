@@ -5,8 +5,8 @@ SpaceShips Game
 
 Contributors: [Claudia](https://github.com/Callisto13), [Ming](https://github.com/ming-chan), [Attila](https://github.com/Tr1ckX), [Ed](https://github.com/ejbyne)
 
-[![Code Climate](https://codeclimate.com/github/Callisto13/Maker-Wars-space-project/badges/gpa.svg)](https://codeclimate.com/github/Callisto13/Maker-Wars-space-project)
-[![Test Coverage](https://codeclimate.com/github/Callisto13/Maker-Wars-space-project/badges/coverage.svg)](https://codeclimate.com/github/Callisto13/Maker-Wars-space-project)
+[![Code Climate](https://codeclimate.com/github/ejbyne/spaceships-project/badges/gpa.svg)](https://codeclimate.com/github/ejbyne/spaceships-project)
+[![Test Coverage](https://codeclimate.com/github/ejbyne/spaceships-project/badges/coverage.svg)](https://codeclimate.com/github/ejbyne/spaceships-project)
 
 ## The Plan:
 After some brainstorming, we decided to try and create a realtime multiplayer game involving spaceships.
