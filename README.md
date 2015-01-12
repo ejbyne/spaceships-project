@@ -34,7 +34,7 @@ In terms of technology, we decided at an early stage to use a Node.js server, wi
 
 ## Instructions
 
-The live version of the game is available [here](http://space-makers.herokuapp.com). The game will automatically start once at least two players have joined.
+The live version of the game is available at <a href="http://space-makers.herokuapp.com">http://space-makers.herokuapp.com</a>. The game will automatically start once at least two players have joined.
 
 Use the keyboard arrows for moving around the screen, and the space bar to fire.
 
@@ -51,7 +51,7 @@ Change into the directory and npm install the modules:
  $ npm install
 ~~~
 
-Start the node server and visit [http://localhost:3000]:
+Start the node server and visit <a href="http://localhost:3000">http://localhost:3000</a>
 
 ~~~
  npm start
