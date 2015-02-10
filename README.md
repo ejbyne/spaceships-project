@@ -34,7 +34,7 @@ In terms of technology, we decided at an early stage to use a Node.js server, wi
 
 ## Instructions
 
-The live version of the game is available at <a href="http://space-makers.herokuapp.com">http://space-makers.herokuapp.com</a>. The game will automatically start once at least two players have joined.
+The live version of the game is available at <a href="https://makers-wars.herokuapp.com">http://https://makers-wars.herokuapp.com</a>. The game will automatically start once at least two players have joined.
 
 Use the keyboard arrows for moving around the screen, and the space bar to fire.
 
