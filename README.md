@@ -1,4 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/ejbyne/spaceships-project/badges/gpa.svg)](https://codeclimate.com/github/ejbyne/spaceships-project)
+[![Test Coverage](https://codeclimate.com/github/ejbyne/spaceships-project/badges/coverage.svg)](https://codeclimate.com/github/ejbyne/spaceships-project)
 
 SpaceShips Game
 =======================
