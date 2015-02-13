@@ -11,12 +11,6 @@ var Game = function(renderer, socketHandler, ship, missile) {
   this.keys = [];
 };
 
-// Game.prototype.runGame = function(renderer, game) {
-//   renderer.clearCanvas();
-//   game._updateGame();
-//   requestAnimationFrame(this.runGame(renderer, game));
-// };
-
 Game.prototype.updateGame = function() {
   this._updateMovement();
   this._updatePlayerShipAndMissile();

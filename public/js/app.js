@@ -32,7 +32,6 @@ $(document).ready(function() {
   });
 
   socketHandler.startSocketHandler(game, ship, missile);
-
   runGame();
 
 });

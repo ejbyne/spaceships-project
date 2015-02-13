@@ -11,15 +11,10 @@ body {
 
 #canvas {
 	display: none;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	z-index: -1;
 }
 
 #logo {
 	margin-top: 150px;
-	z-index: -2;
 }
 
 #gameover{

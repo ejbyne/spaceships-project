@@ -72,6 +72,10 @@ Renderer.prototype.renderScore = function(score) {
   this.ctx.fillText("Score: " + score, 32, 32);
 };
 
+Renderer.prototype.showWaitingMessage = function() {
+  $('#waiting').fadeIn(3000);
+};
+
 Renderer.prototype.hideWelcomeMessage = function(game) {
   if (Object.keys(game.otherShips).length === 0) {
     $('#waiting').hide();
@@ -79,4 +83,9 @@ Renderer.prototype.hideWelcomeMessage = function(game) {
       $('#canvas').show();
     });
   }
+};
+
+Renderer.prototype.showGameOverMessage = function() {
+  $('#canvas').hide();
+  $('#gameover').show();
 };

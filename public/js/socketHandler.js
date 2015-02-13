@@ -9,7 +9,7 @@ SocketHandler.prototype.startSocketHandler = function(game, ship, missile) {
 	this.missile = missile;
 	this._sendStartData();
  	this._addListeners();
-  $('#waiting').fadeIn(3000);
+  this.renderer.showWaitingMessage();
 };
 
 SocketHandler.prototype.sendShipData = function() {
@@ -75,8 +75,7 @@ SocketHandler.prototype._listenForDeleteShip = function() {
     }
     if (shipData.id === _this.game.playerId) {
       _this.game.alive = false;
-      $('#canvas').hide();
-      $('#gameover').show();
+      _this.renderer.showGameOverMessage();
     }
   });
 };
