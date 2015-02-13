@@ -5,7 +5,7 @@ SpaceShips Game
 
 <img src="readmelogo.png">
 
-## Synopsis
+## Summary
 
 In Week 9 at Makers Academy we were assigned to groups of four and tasked to develop a mini web project within three days, which we presented to the rest of the Academy at the end of the week. Whilst it was not something we had ever done before, we were keen to try creating a real time animated game.
 
@@ -57,7 +57,7 @@ Start the node server and visit <a href="http://localhost:3000">http://localhost
  npm start
 ~~~
 
-## Job List
+## To do List
 
 - Add ability to input player names.
 - Add leaderboard for highest scorers.
@@ -78,7 +78,7 @@ This is a neat function for calculating whether a ship has collided with a missi
   };
 ~~~
 
-## Takeaway
+## Reflections
 
 This was a challenging project given our lack of experience in developing games. We were required to master how to render animated objects using HTML5 canvas and integrating this with web sockets so that coordinates and other necessary information could be passed between clients at the right times. HTML5 canvas also required quite complex geometrical calculations which were certainly a test for our maths skills!
 
