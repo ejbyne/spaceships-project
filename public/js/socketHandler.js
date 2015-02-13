@@ -1,7 +1,7 @@
 var SocketHandler = function(socket, renderer) {
 	this.socket = socket;
 	this.renderer = renderer;
-}
+};
 
 SocketHandler.prototype.startSocketHandler = function(game, ship, missile) {
 	this.game = game;
@@ -57,10 +57,7 @@ SocketHandler.prototype._listenForPlayerId = function() {
 SocketHandler.prototype._listenForAddShip = function() {
 	_this = this;
   this.socket.on('add ship', function(shipData) {
-    $('#waiting').hide();
-    $('#logo').slideUp(2000).delay(1000, function(){
-      _this.game.runGame();
-    }).fadeOut(3000);
+    _this.renderer.hideWelcomeMessage(_this.game);
     _this.game.otherShips[shipData.id] = new Ship(_this.renderer.ctx);
     _this.game.otherShips[shipData.id].x = shipData.x;
     _this.game.otherShips[shipData.id].y = shipData.y;
@@ -96,6 +93,7 @@ SocketHandler.prototype._listenForDeleteMissile = function() {
 SocketHandler.prototype._listenForUpdateShip = function() {
   _this = this;
   this.socket.on('update ship', function(shipData) {
+
     if (_this.game.otherShips[shipData.id]) {
       _this.game.otherShips[shipData.id].x = shipData.x;
       _this.game.otherShips[shipData.id].y = shipData.y;

@@ -1,4 +1,4 @@
-var Game = function(socketHandler, renderer, ship, missile) {
+var Game = function(renderer, socketHandler, ship, missile) {
   this.socketHandler = socketHandler;
   this.renderer = renderer;
   this.ship = ship;
@@ -11,13 +11,13 @@ var Game = function(socketHandler, renderer, ship, missile) {
   this.keys = [];
 };
 
-Game.prototype.runGame = function() {
-  this.renderer.clearCanvas();
-  this._updateGame();
-  requestAnimationFrame(this.runGame.call(this));
-};
+// Game.prototype.runGame = function(renderer, game) {
+//   renderer.clearCanvas();
+//   game._updateGame();
+//   requestAnimationFrame(this.runGame(renderer, game));
+// };
 
-Game.prototype._updateGame = function() {
+Game.prototype.updateGame = function() {
   this._updateMovement();
   this._updatePlayerShipAndMissile();
   this._updateOtherShips();

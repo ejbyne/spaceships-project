@@ -9,8 +9,17 @@ body {
 	text-align: center;
 }
 
+#canvas {
+	display: none;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: -1;
+}
+
 #logo {
 	margin-top: 150px;
+	z-index: -2;
 }
 
 #gameover{
@@ -23,4 +32,5 @@ body {
 	font-family: "Helvetica Neue", Arial;
 	font-weight: 200;
 	color: #fff;
+	z-index: -1;
 }

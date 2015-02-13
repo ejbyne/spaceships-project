@@ -71,3 +71,12 @@ Renderer.prototype.renderScore = function(score) {
   this.ctx.textBaseline = "top";
   this.ctx.fillText("Score: " + score, 32, 32);
 };
+
+Renderer.prototype.hideWelcomeMessage = function(game) {
+  if (Object.keys(game.otherShips).length === 0) {
+    $('#waiting').hide();
+    $('#logo').slideUp(2000).delay(1000, function(){
+      $('#canvas').show();
+    });
+  }
+};

@@ -14,7 +14,7 @@ var Missile = function (colour) {
   this.velocityX = 0;
   this.velocityY = 0;
   this.angle = 0;
-}
+};
 
 Missile.prototype.setAttributes = function(targetX, targetY, startX, startY) {
   this.targetX = targetX;

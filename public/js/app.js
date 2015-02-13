@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  var socket = io.connect('/');
+  var socket = io();
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
   canvas.width = document.body.clientWidth;
@@ -10,11 +10,18 @@ $(document).ready(function() {
                  "#48b427", "#7ab5ec", "#ff004c", "#8974bd",
                  "#ff40a7", "#488627"];
   var randomColour = colours[Math.floor(Math.random() * colours.length-1)]; 
+  
   var renderer = new Renderer(ctx, canvas);
+  var socketHandler = new SocketHandler(socket, renderer);
   var ship = new Ship(renderer, randomColour);
   var missile = new Missile("#ff0000");
-  var socketHandler = new SocketHandler(socket, renderer);
-  var game = new Game(socketHandler, renderer, ship, missile);
+  var game = new Game(renderer, socketHandler, ship, missile);
+
+  var runGame = function() {
+    renderer.clearCanvas();
+    game.updateGame();
+    requestAnimationFrame(runGame); 
+  };
 
   document.body.style.overflow = 'hidden';
   document.body.addEventListener("keydown", function(e) {
@@ -25,5 +32,7 @@ $(document).ready(function() {
   });
 
   socketHandler.startSocketHandler(game, ship, missile);
+
+  runGame();
 
 });
