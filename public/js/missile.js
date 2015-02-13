@@ -1,5 +1,4 @@
-var Missile = function (ctx, colour){
-  this.ctx = ctx;
+var Missile = function (colour) {
   this.missileColour = colour || "#1e90ff";
   this.x = -10;
   this.y = -10;
@@ -15,7 +14,7 @@ var Missile = function (ctx, colour){
   this.velocityX = 0;
   this.velocityY = 0;
   this.angle = 0;
-};
+}
 
 Missile.prototype.setAttributes = function(targetX, targetY, startX, startY) {
   this.targetX = targetX;
@@ -32,14 +31,6 @@ Missile.prototype.update = function() {
     this._applyFriction();
     this._applyVelocity();
   }
-};
-
-Missile.prototype.render = function() {
-  this.ctx.fillStyle = this.missileColour;
-  this.ctx.beginPath();
-  this.ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-  this.ctx.closePath();
-  this.ctx.fill();
 };
 
 Missile.prototype._applyTrajectory = function() {

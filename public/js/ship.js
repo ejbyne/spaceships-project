@@ -1,8 +1,7 @@
-var Ship = function (canvas, ctx, shipColour) {
-  this.canvas = canvas;
-  this.ctx = ctx;
-  this.x = 32 + (Math.random() * (this.canvas.width - 64));
-  this.y = 32 + (Math.random() * (this.canvas.height - 64));
+var Ship = function (renderer, shipColour) {
+  this.renderer = renderer;
+  this.x = 32 + (Math.random() * (this.renderer.canvas.width - 64));
+  this.y = 32 + (Math.random() * (this.renderer.canvas.height - 64));
   this.radius = 10;
   this.isThrusting = false;
   this.thrust = 0.2;
@@ -32,66 +31,17 @@ Ship.prototype.update = function() {
   this._applyVelocity();
 };
 
-Ship.prototype.render = function() {
-  this.ctx.save();
-  this.ctx.translate(this.x,this.y);
-  this.ctx.rotate(this.radians);
-
-  if (this.isThrusting) {
-    this.ctx.beginPath();
-    this.ctx.moveTo(20, 0);
-    this.ctx.lineTo(12.5, 5);
-    this.ctx.lineTo(10, 0);
-    this.ctx.lineTo(12.5, -5);
-    this.ctx.lineTo(20, 0);
-    this.ctx.fillStyle = this.thrustFillColour;
-    this.ctx.fill();
-    this.ctx.strokeStyle = this.thrustStrokeColour;
-    this.ctx.stroke();
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(17.5, -5);
-    this.ctx.lineTo(15, -2.5);
-    this.ctx.lineTo(12.5, -5);
-    this.ctx.lineTo(15, -7.5);
-    this.ctx.fillStyle = this.thrustFillColour;
-    this.ctx.fill();
-    this.ctx.strokeStyle = this.thrustStrokeColour;
-    this.ctx.stroke();
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(17.5, 5);
-    this.ctx.lineTo(15, 2.5);
-    this.ctx.lineTo(12.5, 5);
-    this.ctx.lineTo(15, 7.5);
-    this.ctx.fillStyle = this.thrustFillColour;
-    this.ctx.fill();
-    this.ctx.strokeStyle = this.thrustStrokeColour;
-    this.ctx.stroke();
-  }
-
-  this.ctx.beginPath();
-  this.ctx.moveTo(-5, 0);
-  this.ctx.lineTo(15, 10);
-  this.ctx.lineTo(10, 0);
-  this.ctx.lineTo(15, -10);
-  this.ctx.lineTo(-5, 0);
-  this.ctx.fillStyle = this.shipColour;
-  this.ctx.fill();
-  this.ctx.restore();
-};
-
 Ship.prototype._checkCanvasBounds = function() {
   if(this.x < this.radius){
-    this.x = this.canvas.width;
+    this.x = this.renderer.canvas.width;
   }
-  if(this.x > this.canvas.width){
+  if(this.x > this.renderer.canvas.width){
     this.x = this.radius;
   }
   if(this.y < this.radius){
-    this.y = this.canvas.height;
+    this.y = this.renderer.canvas.height;
   }
-  if(this.y > this.canvas.height){
+  if(this.y > this.renderer.canvas.height){
     this.y = this.radius;
   }
 };
