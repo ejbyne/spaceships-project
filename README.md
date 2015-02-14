@@ -1,10 +1,7 @@
 [![Code Climate](https://codeclimate.com/github/ejbyne/spaceships-project/badges/gpa.svg)](https://codeclimate.com/github/ejbyne/spaceships-project)
 [![Test Coverage](https://codeclimate.com/github/ejbyne/spaceships-project/badges/coverage.svg)](https://codeclimate.com/github/ejbyne/spaceships-project)
 
-SpaceShips Game
-=======================
-
-<img src="readmelogo.png">
+# SpaceShips Game
 
 ## Summary
 
@@ -33,6 +30,14 @@ In terms of technology, we decided at an early stage to use a Node.js server, wi
 - [Claudia Beresford](https://github.com/Callisto13)
 - [Attila Mirk](https://github.com/Tr1ckX)
 
+## Screenshots
+
+### Title screen
+<img src="images/title_screenshot.png">
+
+### Game screen
+<img src="images/game_screenshot.png">
+
 ## Instructions
 
 The live version of the game is available at <a href="https://makers-wars.herokuapp.com">https://makers-wars.herokuapp.com</a>. The game will automatically start once at least two players have joined.
@@ -42,20 +47,28 @@ Use the keyboard arrows for moving around the screen, and the space bar to fire.
 To try the game locally, please clone this repository on your machine:
 
 ~~~
- git clone https://github.com/ejbyne/spaceships-project.git
+$ git clone https://github.com/ejbyne/spaceships-project.git
 ~~~
 
 Change into the directory and npm install the modules:
 
 ~~~
- $ cd spaceships-project
- $ npm install
+$ cd spaceships-project
+$ npm install
 ~~~
 
-Start the node server and visit <a href="http://localhost:3000">http://localhost:3000</a>
+Start the node server:
 
 ~~~
- npm start
+$ npm start
+~~~
+
+Visit <a href="http://localhost:3000">http://localhost:3000</a>.
+
+Run the tests:
+
+~~~
+$ npm test
 ~~~
 
 ## To do List
@@ -64,20 +77,7 @@ Start the node server and visit <a href="http://localhost:3000">http://localhost
 - Add leaderboard for highest scorers.
 - Game logic is currently all on the client side. Consider moving game logic server side subject to this not slowing game performance.
 - Fix minor bugs, in particular an issue that it's sometimes possible to crash into a ship that has already been destroyed.
-- Learn to test web sockets and apply tests to our project.
-
-## Favourite Code Snippet
-
-This is a neat function for calculating whether a ship has collided with a missile or another ship:
-
-~~~
- Game.prototype._isCollision = function(entity1, entity2) {
-    var dx = (entity1.x + entity1.radius) - (entity2.x + entity2.radius);
-    var dy = (entity1.y + entity1.radius) - (entity2.y + entity2.radius);
-    var distance = Math.sqrt(dx * dx + dy * dy);
-    return distance < entity1.radius + entity2.radius ? true : false;
-  };
-~~~
+- Learn to test web sockets and apply to our project.
 
 ## Reflections
 
