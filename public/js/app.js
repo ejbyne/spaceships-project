@@ -6,6 +6,14 @@ $(document).ready(function() {
   canvas.width = document.body.clientWidth;
   canvas.height = document.body.clientHeight;
 
+  document.body.style.overflow = 'hidden';
+  document.body.addEventListener("keydown", function(e) {
+      game.keys[e.keyCode] = true;
+  });
+  document.body.addEventListener("keyup", function(e) {
+      game.keys[e.keyCode] = false;
+  });
+
   var shipColourOptions = ["#f6546a", "#1e90ff", "#f2d007", "#0000ff",
                            "#00c7cc", "#4584d3", "#dd40a7", "#804a2d",
                            "#48b427", "#7ab5ec", "#ff004c", "#8974bd",
@@ -24,14 +32,6 @@ $(document).ready(function() {
     game.updateGame();
     requestAnimationFrame(runGame); 
   };
-
-  document.body.style.overflow = 'hidden';
-  document.body.addEventListener("keydown", function(e) {
-      game.keys[e.keyCode] = true;
-  });
-  document.body.addEventListener("keyup", function(e) {
-      game.keys[e.keyCode] = false;
-  });
 
   socketHandler.startSocketHandler(game, ship, missile);
   runGame();

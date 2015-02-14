@@ -6,14 +6,14 @@ var SocketsController = function(io) {
 
 SocketsController.prototype.listenForConnection = function() {
   var _this = this;
-  _this.io.on('connection', function(socket) {
-    _this.sendExistingShips(_this, socket);
-    _this.recordNewShipAndMissile(_this, socket);
-    _this.addListeners(_this, socket);
+  this.io.on('connection', function(socket) {
+    _this._sendExistingShips(_this, socket);
+    _this._recordNewShipAndMissile(_this, socket);
+    _this._addListeners(_this, socket);
   });
 };
 
-SocketsController.prototype.sendExistingShips = function(_this, socket) {
+SocketsController.prototype._sendExistingShips = function(_this, socket) {
   console.log(socket.id + ' connected');
   for (var keys in _this.remoteShips) {
     _this.io.to(socket.id).emit("add ship", {
@@ -26,28 +26,28 @@ SocketsController.prototype.sendExistingShips = function(_this, socket) {
   }
 };
 
-SocketsController.prototype.recordNewShipAndMissile = function(_this, socket) {
+SocketsController.prototype._recordNewShipAndMissile = function(_this, socket) {
   _this.remoteShips[socket.id] = {id: socket.id};
   _this.remoteMissiles[socket.id] = {id: socket.id};
 };
 
-SocketsController.prototype.addListeners = function(_this, socket) {
-  _this.listenForDisconnect(_this, socket);
-  _this.listenForNewPlayer(_this, socket);
-  _this.listenForShipData(_this, socket);
-  _this.listenForMissileData(_this, socket);
-  _this.listenForMissileHitShip(_this, socket);
-  _this.listenForShipHitShip(_this, socket);
+SocketsController.prototype._addListeners = function(_this, socket) {
+  _this._listenForDisconnect(_this, socket);
+  _this._listenForNewPlayer(_this, socket);
+  _this._listenForShipData(_this, socket);
+  _this._listenForMissileData(_this, socket);
+  _this._listenForMissileHitShip(_this, socket);
+  _this._listenForShipHitShip(_this, socket);
 };
 
-SocketsController.prototype.listenForDisconnect = function(_this, socket) {
+SocketsController.prototype._listenForDisconnect = function(_this, socket) {
   socket.on('disconnect', function() {
     console.log(socket.id + ' disconnected');
-    _this.deleteShipAndMissile(_this, socket.id);
+    _this._deleteShipAndMissile(_this, socket.id);
   });
 };
 
-SocketsController.prototype.listenForNewPlayer = function(_this, socket) {
+SocketsController.prototype._listenForNewPlayer = function(_this, socket) {
   socket.on('start', function(shipData) {
     _this.remoteShips[socket.id].x = shipData.x;
     _this.remoteShips[socket.id].y = shipData.y;
@@ -64,7 +64,7 @@ SocketsController.prototype.listenForNewPlayer = function(_this, socket) {
   });
 }
 
-SocketsController.prototype.listenForShipData = function(_this, socket) {
+SocketsController.prototype._listenForShipData = function(_this, socket) {
   socket.on('send ship data', function(shipData) {
     if (_this.remoteShips[socket.id]) {
       _this.remoteShips[socket.id].x = shipData.x;
@@ -80,7 +80,7 @@ SocketsController.prototype.listenForShipData = function(_this, socket) {
   });
 };
 
-SocketsController.prototype.listenForMissileData = function(_this, socket) {
+SocketsController.prototype._listenForMissileData = function(_this, socket) {
   socket.on('send missile data', function(missileData) {
     if (_this.remoteMissiles[socket.id]) {
       _this.remoteMissiles[socket.id].x = missileData.x;
@@ -94,20 +94,20 @@ SocketsController.prototype.listenForMissileData = function(_this, socket) {
   });
 };
 
-SocketsController.prototype.listenForMissileHitShip = function(_this, socket) {
+SocketsController.prototype._listenForMissileHitShip = function(_this, socket) {
   socket.on('missile hit ship', function() {
-    _this.deleteShipAndMissile(_this, socket.id);
+    _this._deleteShipAndMissile(_this, socket.id);
   });
 };
 
-SocketsController.prototype.listenForShipHitShip = function(_this, socket) {
+SocketsController.prototype._listenForShipHitShip = function(_this, socket) {
   socket.on('ship hit ship', function(otherShipData) {
-    _this.deleteShipAndMissile(_this, otherShipData.id);
-    _this.deleteShipAndMissile(_this, socket.id);
+    _this._deleteShipAndMissile(_this, otherShipData.id);
+    _this._deleteShipAndMissile(_this, socket.id);
   });
 };
 
-SocketsController.prototype.deleteShipAndMissile = function(_this, shipId) {
+SocketsController.prototype._deleteShipAndMissile = function(_this, shipId) {
   if (_this.remoteShips[shipId]) { 
     delete _this.remoteShips[shipId];
     delete _this.remoteMissiles[shipId];
