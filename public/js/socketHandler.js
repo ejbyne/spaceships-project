@@ -48,14 +48,14 @@ SocketHandler.prototype._addListeners = function() {
 };
 
 SocketHandler.prototype._listenForPlayerId = function() {
-	_this = this;
+	var _this = this;
 	this.socket.on('socket id', function(socketId) {
     _this.game.playerId = socketId.id;
   });
 };
 
 SocketHandler.prototype._listenForAddShip = function() {
-	_this = this;
+	var _this = this;
   this.socket.on('add ship', function(shipData) {
     _this.renderer.hideWelcomeMessage(_this.game);
     _this.game.otherShips[shipData.id] = new Ship(_this.renderer.ctx);
@@ -68,7 +68,7 @@ SocketHandler.prototype._listenForAddShip = function() {
 };
 
 SocketHandler.prototype._listenForDeleteShip = function() {
-	_this = this;
+	var _this = this;
 	this.socket.on('delete ship', function(shipData) {
     if (_this.game.otherShips[shipData.id]) {
       delete _this.game.otherShips[shipData.id];
@@ -81,7 +81,7 @@ SocketHandler.prototype._listenForDeleteShip = function() {
 };
 
 SocketHandler.prototype._listenForDeleteMissile = function() {
-	_this = this;
+	var _this = this;
 	this.socket.on('delete missile', function(missileData) {
     if (_this.game.otherMissiles[missileData.id]) {
       delete _this.game.otherMissiles[missileData.id];
@@ -90,7 +90,7 @@ SocketHandler.prototype._listenForDeleteMissile = function() {
 };
 
 SocketHandler.prototype._listenForUpdateShip = function() {
-  _this = this;
+  var _this = this;
   this.socket.on('update ship', function(shipData) {
 
     if (_this.game.otherShips[shipData.id]) {
@@ -102,7 +102,7 @@ SocketHandler.prototype._listenForUpdateShip = function() {
 };
 
 SocketHandler.prototype._listenForUpdateMissile = function() {
-  _this = this;
+  var _this = this;
   this.socket.on('update missile', function(missileData) {
     if (_this.game.otherMissiles[missileData.id]) {
       _this.game.otherMissiles[missileData.id].x = missileData.x;
