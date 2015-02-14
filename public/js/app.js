@@ -29,7 +29,6 @@ $(document).ready(function() {
   var game = new Game(renderer, socketHandler, ship, missile);
 
   var runGame = function() {
-    renderer.clearCanvas();
     game.updateGame();
     requestAnimationFrame(runGame); 
   };

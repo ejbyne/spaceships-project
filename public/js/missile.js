@@ -26,7 +26,7 @@ Missile.prototype.setAttributes = function(targetX, targetY, startX, startY) {
 };
 
 Missile.prototype.update = function() {
-  if(this.isFired){
+  if (this.isFired){
     this._applyTrajectory();
     this._applyFriction();
     this._applyVelocity();

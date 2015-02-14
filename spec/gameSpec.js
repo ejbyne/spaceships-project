@@ -1,11 +1,14 @@
 describe('Game', function() {
 
-  var ship, missile, game;
+  var ship, missile, game, rendererStub, socketHandlerStub;
 
   beforeEach(function() {
-    ship = new Ship('canvasStub', 'ctxStub');
-    missile = new Missile('ctxStub');
-    game = new Game('socketStub', 'ctxStub', ship, missile);
+    rendererStub = { canvas: { width: 1000,
+                               height: 1000 } };
+    socketHandlerStub = {};
+    ship = new Ship(rendererStub);
+    missile = new Missile();
+    game = new Game(rendererStub, socketHandlerStub, ship, missile);
     ship.x = 300;
     ship.y = 300;
   });

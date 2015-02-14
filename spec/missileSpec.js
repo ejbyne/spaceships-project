@@ -3,7 +3,7 @@ describe('Missile', function() {
   var missile;
 
   beforeEach(function() {
-    missile = new Missile('ctxStub');
+    missile = new Missile();
   });
 
   it ('moves in direction ship is pointing', function() {

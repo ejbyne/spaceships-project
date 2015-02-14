@@ -12,6 +12,7 @@ var Game = function(renderer, socketHandler, ship, missile) {
 };
 
 Game.prototype.updateGame = function() {
+  this.renderer.clearCanvas();
   this._updateMovement();
   this._updatePlayerShipAndMissile();
   this._updateOtherShips();
