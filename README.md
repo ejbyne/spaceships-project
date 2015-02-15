@@ -19,9 +19,11 @@ In terms of technology, we decided at an early stage to use a Node.js server, wi
 - Javascript
 - JQuery
 - HTML5 canvas
-- Heroku
 - Jasmine
 - Mocha/Chai/CasperJS
+- JSHint
+- Grunt
+- Heroku
 
 ## Collaborators
 
