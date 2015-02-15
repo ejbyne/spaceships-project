@@ -64,7 +64,7 @@ describe('Game', function() {
   it ('does not turn the ship right if the right arrow is not pressed', function() {
     game.keys[39] = false;
     game._updateMovement();
-    expect(ship.turn).not.toHaveBeenCalledWith();
+    expect(ship.turn).not.toHaveBeenCalled();
   });
 
   it ('turns the ship right if the right arrow is pressed', function() {
