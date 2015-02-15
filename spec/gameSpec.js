@@ -37,10 +37,22 @@ describe('Game', function() {
     expect(renderer.renderScore).toHaveBeenCalledWith(game.score);
   });
 
+  it ('does not move the ship forward if the forward arrow is not pressed', function() {
+    game.keys[38] = false;
+    game._updateMovement();
+    expect(ship.isThrusting).toBe(false);
+  });
+
   it ('moves the ship forward if the forward arrow is pressed', function() {
     game.keys[38] = true;
     game._updateMovement();
     expect(ship.isThrusting).toBe(true);
+  });
+
+  it ('does not turn the ship left if the left arrow is not pressed', function() {
+    game.keys[37] = false;
+    game._updateMovement();
+    expect(ship.turn).not.toHaveBeenCalled();
   });
 
   it ('turns the ship left if the left arrow is pressed', function() {
@@ -49,10 +61,22 @@ describe('Game', function() {
     expect(ship.turn).toHaveBeenCalledWith(-1);
   });
 
-  it ('turns the ship left if the left arrow is pressed', function() {
+  it ('does not turn the ship right if the right arrow is not pressed', function() {
+    game.keys[39] = false;
+    game._updateMovement();
+    expect(ship.turn).not.toHaveBeenCalledWith();
+  });
+
+  it ('turns the ship right if the right arrow is pressed', function() {
     game.keys[39] = true;
     game._updateMovement();
     expect(ship.turn).toHaveBeenCalledWith(1);
+  });
+
+  it ('does not fire a missile if the space bar is not pressed', function() {
+    game.keys[32] = false;
+    game._updateMovement();
+    expect(missile.setAttributes).not.toHaveBeenCalled();
   });
 
   it ('fires a missile if the space bar is pressed', function() {
@@ -61,7 +85,7 @@ describe('Game', function() {
     game.keys[32] = true;
     game._updateMovement();
     expect(missile.setAttributes).toHaveBeenCalledWith(285, 300, 300, 300);
-  })
+  });
 
   it ('knows when the ship has not hit another ship', function() {
     otherShip.x = 200;
