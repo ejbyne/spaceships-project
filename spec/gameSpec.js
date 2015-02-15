@@ -23,7 +23,7 @@ describe('Game', function() {
     game.otherMissiles.otherMissile = otherMissile;
   });
 
-  it('updates the ship and missile positions and re-renders to canvas', function() {
+  it('updates the ship and missile positions and re-renders the canvas', function() {
     game.updateGame();
     expect(renderer.clearCanvas).toHaveBeenCalled();
     expect(ship.update).toHaveBeenCalled();

@@ -32,16 +32,16 @@ Ship.prototype.update = function() {
 };
 
 Ship.prototype._checkCanvasBounds = function() {
-  if(this.x < this.radius){
+  if(this.x < this.radius) {
     this.x = this.renderer.canvas.width;
   }
   if(this.x > this.renderer.canvas.width){
     this.x = this.radius;
   }
-  if(this.y < this.radius){
+  if(this.y < this.radius) {
     this.y = this.renderer.canvas.height;
   }
-  if(this.y > this.renderer.canvas.height){
+  if(this.y > this.renderer.canvas.height) {
     this.y = this.radius;
   }
 };
