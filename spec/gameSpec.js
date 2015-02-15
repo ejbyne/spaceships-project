@@ -1,16 +1,40 @@
 describe('Game', function() {
 
-  var ship, missile, game, rendererStub, socketHandlerStub;
+  var renderer, socketHandler, ship, missile, otherShip, otherMissile, game;
 
   beforeEach(function() {
-    rendererStub = { canvas: { width: 1000,
-                               height: 1000 } };
-    socketHandlerStub = {};
-    ship = new Ship(rendererStub);
-    missile = new Missile();
-    game = new Game(rendererStub, socketHandlerStub, ship, missile);
+    renderer = jasmine.createSpyObj('renderer',
+      ['clearCanvas', 'renderScore', 'renderShip', 'renderMissile']);
+    socketHandler = jasmine.createSpyObj('socketHandler',
+      ['sendShipData', 'sendMissileData', 'sendShipHitShip', 'sendMissileHitShip']);
+    ship = jasmine.createSpyObj('ship',
+      ['turn', 'update']);
+    missile = jasmine.createSpyObj('missile',
+      ['setAttributes', 'update']);
+    otherShip = jasmine.createSpyObj('otherShip',
+      ['turn', 'update']);
+    otherMissile = jasmine.createSpyObj('otherMissile',
+      ['setAttributes', 'update']);
     ship.x = 300;
     ship.y = 300;
+    ship.radius = 10;
+    game = new Game(renderer, socketHandler, ship, missile);
+    game.otherShips.otherShip = otherShip;
+    game.otherMissiles.otherMissile = otherMissile;
+  });
+
+  it('updates the ship and missile positions and re-renders to canvas', function() {
+    game.updateGame();
+    expect(renderer.clearCanvas).toHaveBeenCalled();
+    expect(ship.update).toHaveBeenCalled();
+    expect(renderer.renderShip).toHaveBeenCalledWith(ship);
+    expect(missile.update).toHaveBeenCalled();
+    expect(renderer.renderMissile).toHaveBeenCalledWith(missile);
+    expect(socketHandler.sendShipData).toHaveBeenCalled();
+    expect(socketHandler.sendMissileData).toHaveBeenCalled();
+    expect(renderer.renderShip).toHaveBeenCalledWith(otherShip);
+    expect(renderer.renderMissile).toHaveBeenCalledWith(otherMissile);
+    expect(renderer.renderScore).toHaveBeenCalledWith(game.score);
   });
 
   it ('moves the ship forward if the forward arrow is pressed', function() {
@@ -22,31 +46,57 @@ describe('Game', function() {
   it ('turns the ship left if the left arrow is pressed', function() {
     game.keys[37] = true;
     game._updateMovement();
-    expect(ship.radians).toEqual(-0.057295779513082325);
+    expect(ship.turn).toHaveBeenCalledWith(-1);
   });
 
   it ('turns the ship left if the left arrow is pressed', function() {
     game.keys[39] = true;
     game._updateMovement();
-    expect(ship.radians).toEqual(0.057295779513082325);
+    expect(ship.turn).toHaveBeenCalledWith(1);
   });
 
   it ('fires a missile if the space bar is pressed', function() {
+    ship.missileLaunchX = 285;
+    ship.missileLaunchY = 300;
     game.keys[32] = true;
     game._updateMovement();
-    expect(missile.isFired).toBe(true);
+    expect(missile.setAttributes).toHaveBeenCalledWith(285, 300, 300, 300);
   })
 
-  it ('knows when two entities have not collided', function() {
-    missile.x = 200;
-    missile.y = 200;
-    expect(game._isCollision(ship, missile)).toBe(false);
+  it ('knows when the ship has not hit another ship', function() {
+    otherShip.x = 200;
+    otherShip.y = 200;
+    otherShip.radius = 10;
+    game._updateOtherShips();
+    expect(game._isCollision(ship, otherShip)).toBe(false);
+    expect(socketHandler.sendShipHitShip).not.toHaveBeenCalled();
   });
 
-  it ('knows when two entities have collided', function() {
-    missile.x = 300;
-    missile.y = 300;
-    expect(game._isCollision(ship, missile)).toBe(true);
+  it ('knows when the ship has hit another ship', function() {
+    otherShip.x = 300;
+    otherShip.y = 300;
+    otherShip.radius = 10;
+    game._updateOtherShips();
+    expect(game._isCollision(ship, otherShip)).toBe(true);
+    expect(socketHandler.sendShipHitShip).toHaveBeenCalledWith('otherShip');
+  });
+
+  it ('knows when the ship has not hit another missile', function() {
+    otherMissile.x = 200;
+    otherMissile.y = 200;
+    otherMissile.radius = 6;
+    game._updateOtherMissiles();
+    expect(game._isCollision(missile, otherMissile)).toBe(false);
+    expect(socketHandler.sendMissileHitShip).not.toHaveBeenCalled();
+  });
+
+  it ('knows when the ship has hit another missile', function() {
+    otherMissile.x = 300;
+    otherMissile.y = 300;
+    otherMissile.radius = 6;
+    game._updateOtherMissiles();
+    expect(game._isCollision(missile, otherMissile)).toBe(false);
+    expect(socketHandler.sendMissileHitShip).toHaveBeenCalled();
   });
 
 });

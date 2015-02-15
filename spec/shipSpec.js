@@ -1,11 +1,13 @@
 describe('Ship', function() {
 
-  var ship, rendererStub;
+  var ship, renderer;
 
   beforeEach(function() {
-    rendererStub = { canvas: { width: 1000,
-                               height: 1000 } };
-    ship = new Ship(rendererStub);
+    renderer = { canvas: {
+      width: 1000,
+      height: 1000 }
+    };
+    ship = new Ship(renderer);
     ship.x = 300;
     ship.y = 300;
   });
