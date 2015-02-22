@@ -14,18 +14,18 @@ SocketHandler.prototype.startSocketHandler = function(game, ship, missile) {
 };
 
 SocketHandler.prototype.sendShipData = function() {
-	this.socket.emit('send ship data', {		x: 				this.ship.x,
-																					y: 				this.ship.y,
-																					radians: 	this.ship.radians});
+	this.socket.emit('send ship data', { x:       this.ship.x,
+																			 y: 			this.ship.y,
+																			 radians: this.ship.radians});
 };
 
 SocketHandler.prototype.sendMissileData = function() {
-  this.socket.emit('send missile data', {	x: 				this.missile.x,
-																					y: 				this.missile.y});
+  this.socket.emit('send missile data', {	x: this.missile.x,
+																					y: this.missile.y});
 };
 
 SocketHandler.prototype.sendShipHitShip = function(otherShipId) {
-	this.socket.emit('ship hit ship', {id: otherShipId});
+	this.socket.emit('ship hit ship', { id: otherShipId });
 };
 
 SocketHandler.prototype.sendMissileHitShip = function() {
@@ -33,9 +33,9 @@ SocketHandler.prototype.sendMissileHitShip = function() {
 };
 
 SocketHandler.prototype._sendStartData = function() {
- 	this.socket.emit('start', {	x: 					this.ship.x,
- 															y: 					this.ship.y,
- 															radians: 		this.ship.radians,
+ 	this.socket.emit('start', {	x:          this.ship.x,
+ 															y:          this.ship.y,
+ 															radians:    this.ship.radians,
  															shipColour: this.ship.shipColour});
 };
 
