@@ -15,13 +15,13 @@ SocketHandler.prototype.startSocketHandler = function(game, ship, missile) {
 
 SocketHandler.prototype.sendShipData = function() {
 	this.socket.emit('send ship data', { x: this.ship.x,
-																			 y: this.ship.y,
-																			 radians: this.ship.radians});
+                                       y: this.ship.y,
+                                       radians: this.ship.radians});
 };
 
 SocketHandler.prototype.sendMissileData = function() {
   this.socket.emit('send missile data', { x: this.missile.x,
-								                          y: this.missile.y});
+                                          y: this.missile.y});
 };
 
 SocketHandler.prototype.sendShipHitShip = function(otherShipId) {
@@ -34,9 +34,9 @@ SocketHandler.prototype.sendMissileHitShip = function() {
 
 SocketHandler.prototype._sendStartData = function() {
  	this.socket.emit('start', { x: this.ship.x,
- 															y: this.ship.y,
- 															radians: this.ship.radians,
- 															shipColour: this.ship.shipColour});
+                              y: this.ship.y,
+                              radians: this.ship.radians,
+                              shipColour: this.ship.shipColour});
 };
 
 SocketHandler.prototype._addListeners = function(_this) {
