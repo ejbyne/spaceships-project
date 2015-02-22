@@ -20,8 +20,8 @@ SocketHandler.prototype.sendShipData = function() {
 };
 
 SocketHandler.prototype.sendMissileData = function() {
-  this.socket.emit('send missile data', {	x: this.missile.x,
-																					y: this.missile.y});
+  this.socket.emit('send missile data', { x: this.missile.x,
+								                          y: this.missile.y});
 };
 
 SocketHandler.prototype.sendShipHitShip = function(otherShipId) {
@@ -33,7 +33,7 @@ SocketHandler.prototype.sendMissileHitShip = function() {
 };
 
 SocketHandler.prototype._sendStartData = function() {
- 	this.socket.emit('start', {	x: this.ship.x,
+ 	this.socket.emit('start', { x: this.ship.x,
  															y: this.ship.y,
  															radians: this.ship.radians,
  															shipColour: this.ship.shipColour});
