@@ -14,7 +14,7 @@ SocketHandler.prototype.startSocketHandler = function(game, ship, missile) {
 };
 
 SocketHandler.prototype.sendShipData = function() {
-	this.socket.emit('send ship data', { x: this.ship.x,
+  this.socket.emit('send ship data', { x: this.ship.x,
                                        y: this.ship.y,
                                        radians: this.ship.radians});
 };
@@ -25,31 +25,31 @@ SocketHandler.prototype.sendMissileData = function() {
 };
 
 SocketHandler.prototype.sendShipHitShip = function(otherShipId) {
-	this.socket.emit('ship hit ship', { id: otherShipId });
+  this.socket.emit('ship hit ship', { id: otherShipId });
 };
 
 SocketHandler.prototype.sendMissileHitShip = function() {
-	this.socket.emit('missile hit ship');
+  this.socket.emit('missile hit ship');
 };
 
 SocketHandler.prototype._sendStartData = function() {
- 	this.socket.emit('start', { x: this.ship.x,
+  this.socket.emit('start', { x: this.ship.x,
                               y: this.ship.y,
                               radians: this.ship.radians,
                               shipColour: this.ship.shipColour});
 };
 
 SocketHandler.prototype._addListeners = function(_this) {
- 	this._listenForPlayerId(_this);
-	this._listenForAddShip(_this);
- 	this._listenForDeleteShip(_this);
- 	this._listenForDeleteMissile(_this);
- 	this._listenForUpdateShip(_this);
- 	this._listenForUpdateMissile(_this);
+  this._listenForPlayerId(_this);
+  this._listenForAddShip(_this);
+  this._listenForDeleteShip(_this);
+  this._listenForDeleteMissile(_this);
+  this._listenForUpdateShip(_this);
+  this._listenForUpdateMissile(_this);
 };
 
 SocketHandler.prototype._listenForPlayerId = function(_this) {
-	this.socket.on('socket id', function(socketId) {
+  this.socket.on('socket id', function(socketId) {
     _this.game.playerId = socketId.id;
   });
 };
@@ -67,7 +67,7 @@ SocketHandler.prototype._listenForAddShip = function(_this) {
 };
 
 SocketHandler.prototype._listenForDeleteShip = function(_this) {
-	this.socket.on('delete ship', function(shipData) {
+  this.socket.on('delete ship', function(shipData) {
     if (_this.game.otherShips[shipData.id]) {
       delete _this.game.otherShips[shipData.id];
     }
@@ -79,7 +79,7 @@ SocketHandler.prototype._listenForDeleteShip = function(_this) {
 };
 
 SocketHandler.prototype._listenForDeleteMissile = function(_this) {
-	this.socket.on('delete missile', function(missileData) {
+  this.socket.on('delete missile', function(missileData) {
     if (_this.game.otherMissiles[missileData.id]) {
       delete _this.game.otherMissiles[missileData.id];
     }
