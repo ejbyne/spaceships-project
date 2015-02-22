@@ -1,10 +1,10 @@
 var Renderer = function(ctx, canvas) {
-	this.ctx = ctx;
-	this.canvas = canvas;
+  this.ctx = ctx;
+  this.canvas = canvas;
 };
 
 Renderer.prototype.clearCanvas = function() {
-	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 };
 
 Renderer.prototype.renderShip = function(ship) {

@@ -9,10 +9,10 @@ $(document).ready(function() {
 
   document.body.style.overflow = 'hidden';
   document.body.addEventListener("keydown", function(e) {
-      game.keys[e.keyCode] = true;
+    game.keys[e.keyCode] = true;
   });
   document.body.addEventListener("keyup", function(e) {
-      game.keys[e.keyCode] = false;
+    game.keys[e.keyCode] = false;
   });
 
   var shipColourOptions = ["#f6546a", "#1e90ff", "#f2d007", "#0000ff",

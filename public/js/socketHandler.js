@@ -14,8 +14,8 @@ SocketHandler.prototype.startSocketHandler = function(game, ship, missile) {
 };
 
 SocketHandler.prototype.sendShipData = function() {
-  this.socket.emit('send ship data', { x: this.ship.x,
-                                       y: this.ship.y,
+  this.socket.emit('send ship data', { x:       this.ship.x,
+                                       y:       this.ship.y,
                                        radians: this.ship.radians});
 };
 
@@ -33,9 +33,9 @@ SocketHandler.prototype.sendMissileHitShip = function() {
 };
 
 SocketHandler.prototype._sendStartData = function() {
-  this.socket.emit('start', { x: this.ship.x,
-                              y: this.ship.y,
-                              radians: this.ship.radians,
+  this.socket.emit('start', { x:          this.ship.x,
+                              y:          this.ship.y,
+                              radians:    this.ship.radians,
                               shipColour: this.ship.shipColour});
 };
 
