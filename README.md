@@ -83,6 +83,6 @@ $ npm test
 
 ## Reflections
 
-This was a challenging project given our lack of experience in developing games. We were required to master how to render animated objects using HTML5 canvas and integrating this with web sockets so that coordinates and other necessary information could be passed between clients at the right times. HTML5 canvas also required quite complex geometrical calculations which were certainly a test for our maths skills!
+This was a challenging project given our lack of experience in developing games. We were required to master how to render animated objects using HTML5 canvas and integrate this with web sockets so that coordinates and other necessary information could be passed between clients at the right times. HTML5 canvas also required quite complex geometrical calculations which were certainly a test for our maths skills!
 
 We all learned a great deal from project, not least working together as a team and our teamwork/efficiency certainly improved a lot as each day passed. Although the game itself is fairly simple, the technology behind it is incredibly powerful and I have learned skills that would enable me to move on to creating far more sophisicated software.
