@@ -11,6 +11,10 @@ Together we decided that we wanted to make a multiplayer game that could handle 
 
 In terms of technology, we decided at an early stage to use a Node.js server, with web sockets for enabling real time communication between clients. We investigated the possibility of using the Phaser game engine framework, but ultimately decided to use HTML5 canvas to render the ships and missiles. Combined with Node.js and web sockets, this allowed us to achieve fast game performance.
 
+The live version of the game is available at <a href="https://maker-wars.herokuapp.com">https://maker-wars.herokuapp.com</a>. The game will automatically start once at least two players have joined.
+
+Use the keyboard arrows for moving around the screen, and the space bar to fire.
+
 ## Technologies Used
 
 - Node.js
@@ -41,10 +45,6 @@ In terms of technology, we decided at an early stage to use a Node.js server, wi
 <img src="images/game_screenshot.png">
 
 ## Instructions
-
-The live version of the game is available at <a href="https://maker-wars.herokuapp.com">https://maker-wars.herokuapp.com</a>. The game will automatically start once at least two players have joined.
-
-Use the keyboard arrows for moving around the screen, and the space bar to fire.
 
 To try the game locally, please clone this repository on your machine:
 
@@ -85,4 +85,4 @@ $ npm test
 
 This was a challenging project given our lack of experience in developing games. We were required to master how to render animated objects using HTML5 canvas and integrate this with web sockets so that coordinates and other necessary information could be passed between clients at the right times. HTML5 canvas also required quite complex geometrical calculations which were certainly a test for our maths skills!
 
-We all learned a great deal from project, not least working together as a team and our teamwork/efficiency certainly improved a lot as each day passed. Although the game itself is fairly simple, the technology behind it is incredibly powerful and I have learned skills that would enable me to move on to creating far more sophisicated software.
+We all learned a great deal from project, not least working together as a team and our teamwork/efficiency certainly improved a lot as each day passed. Although the game itself is fairly simple, the technology behind it is powerful and I have learned skills that would enable me to move on to creating far more sophisicated software.
