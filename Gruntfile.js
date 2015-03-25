@@ -54,8 +54,8 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-casperjs');
- grunt.loadNpmTasks('grunt-contrib-jasmine');
- grunt.loadNpmTasks('grunt-express-server');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
+  grunt.loadNpmTasks('grunt-express-server');
 
   grunt.registerTask('default', ['express:test', 'jshint', 'jasmine', 'mocha_casperjs']);
 

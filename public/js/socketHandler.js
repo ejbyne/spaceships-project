@@ -1,15 +1,15 @@
 var SocketHandler = function(socket, renderer) {
-	this.socket = socket;
-	this.renderer = renderer;
+  this.socket = socket;
+  this.renderer = renderer;
 };
 
 SocketHandler.prototype.startSocketHandler = function(game, ship, missile) {
-	var _this = this;
+  var _this = this;
   this.game = game;
-	this.ship = ship;
-	this.missile = missile;
-	this._sendStartData();
- 	this._addListeners(_this);
+  this.ship = ship;
+  this.missile = missile;
+  this._sendStartData();
+  this._addListeners(_this);
   this.renderer.showWaitingMessage();
 };
 
